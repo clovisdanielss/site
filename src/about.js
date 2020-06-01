@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { ModalText, ModalSkil, ModalSkill } from "./modal";
-import ComponentWithModal from './componentwithmodal'
+import ComponentWithModal from "./componentwithmodal";
 
 class Skill extends Component {
   constructor(props) {
@@ -67,6 +67,14 @@ class Skills extends ComponentWithModal {
             </div>
           );
         })}
+        {this.props.readOnly ? null : (
+          <div className={this.classNameHighlight("item")} onClick={this.props.onAdd}>
+            <span className="icon fg-gray">
+              Adicionar Nova
+              <i className="fas fa-plus margin-left-10px"></i>
+            </span>
+          </div>
+        )}
       </div>
     );
   }
@@ -78,7 +86,7 @@ class About extends ComponentWithModal {
     this.state = {
       header: "About",
       profission: "UI / UX Designer & Developer",
-      
+
       text:
         "I am Clóvis, I am a graphic and web designer, and" +
         "I'm very passionate and dedicated to my work. With 7 years" +
@@ -102,7 +110,7 @@ class About extends ComponentWithModal {
     this.onChangeSkillName = this.onChangeSkillName.bind(this);
     this.onChangeSkillValue = this.onChangeSkillValue.bind(this);
     this.onRemoveSkill = this.onRemoveSkill.bind(this);
-    this.onAddSkill = this.onAddSkill.bind(this)
+    this.onAddSkill = this.onAddSkill.bind(this);
     this.defineAndOpenModal = this.defineAndOpenModal.bind(this);
   }
 
@@ -228,6 +236,7 @@ class About extends ComponentWithModal {
                   onChangeName={this.onChangeSkillName}
                   onRemove={this.onRemoveSkill}
                   onAdd={this.onAddSkill}
+                  readOnly={this.props.readOnly}
                 />
                 <a href="#0" className="butn butn-bg ml-0">
                   <span>Contact Me</span>
