@@ -9,7 +9,7 @@ class Skill extends Component {
   }
 
   defineAndOpenModal(e) {
-    this.props.setSelectorIndex(this.props.index);
+    this.props.setSelectors(this.props.index,null);
     this.props.openModal();
   }
   render() {
@@ -28,16 +28,8 @@ class Skill extends Component {
 class Skills extends ComponentWithModal {
   constructor(props) {
     super(props);
-    this.state = {
-      selectorIndex: 0,
-      modalIsOpen: false,
-    };
-    this.setSelectorIndex = this.setSelectorIndex.bind(this);
   }
 
-  setSelectorIndex(selectorIndex) {
-    this.setState({ selectorIndex: selectorIndex });
-  }
 
   render() {
     return (
@@ -50,14 +42,14 @@ class Skills extends ComponentWithModal {
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Skill"
-          skill={this.props.skills[this.state.selectorIndex]}
+          skill={this.props.skills[this.props.index]}
         />
         {this.props.skills.map((skill, key) => {
           return (
             <div key={key} className={this.classNameHighlight()}>
               <Skill
                 skill={skill}
-                setSelectorIndex={this.setSelectorIndex}
+                setSelectors={this.props.setSelectors}
                 index={key}
                 openModal={this.openModal}
                 onChangeValue={this.props.onChangeValue}
@@ -68,7 +60,10 @@ class Skills extends ComponentWithModal {
           );
         })}
         {this.props.readOnly ? null : (
-          <div className={this.classNameHighlight("item")} onClick={this.props.onAdd}>
+          <div
+            className={this.classNameHighlight("item")}
+            onClick={this.props.onAdd}
+          >
             <span className="icon fg-gray">
               Adicionar Nova
               <i className="fas fa-plus margin-left-10px"></i>
@@ -84,8 +79,11 @@ class About extends ComponentWithModal {
   constructor(props) {
     super(props);
     this.state = {
-      header: "About",
-      profission: "UI / UX Designer & Developer",
+      modalIsOpen: false,
+      selector: "",
+      selectorIndex: 0,
+      title: "About",
+      subtitle: "UI / UX Designer & Developer",
 
       text:
         "I am Clóvis, I am a graphic and web designer, and" +
@@ -103,8 +101,6 @@ class About extends ComponentWithModal {
           value: "30%",
         },
       ],
-      modalIsOpen: false,
-      selector: "",
     };
     this.onChangeValue = this.onChangeValue.bind(this);
     this.onChangeSkillName = this.onChangeSkillName.bind(this);
@@ -112,6 +108,14 @@ class About extends ComponentWithModal {
     this.onRemoveSkill = this.onRemoveSkill.bind(this);
     this.onAddSkill = this.onAddSkill.bind(this);
     this.defineAndOpenModal = this.defineAndOpenModal.bind(this);
+    this.setSelectors = this.setSelectors.bind(this);
+  }
+
+  setSelectors(index, name) {
+    this.setState({
+      selectorIndex: index,
+      selector: name,
+    });
   }
 
   /* O seletor define qual estado será modificado,
@@ -182,7 +186,7 @@ class About extends ComponentWithModal {
   /* No clique de uma entidade editavel, primeiro será definido
   o seletor, depois o modal é aberto.*/
   defineAndOpenModal(e) {
-    this.setState({ selector: e.target.getAttribute("data-state") });
+    this.setSelectors(null, e.target.getAttribute("data-state"));
     this.openModal();
   }
 
@@ -210,17 +214,17 @@ class About extends ComponentWithModal {
                 <div className="section-head">
                   <h4
                     className={this.classNameHighlight("fg-light mb-10")}
-                    data-state="header"
+                    data-state="title"
                     onClick={this.defineAndOpenModal}
                   >
-                    {this.state.header}
+                    {this.state.title}
                   </h4>
                   <h6
                     className={this.classNameHighlight("mb-20")}
-                    data-state="profission"
+                    data-state="subtitle"
                     onClick={this.defineAndOpenModal}
                   >
-                    {this.state.profission}
+                    {this.state.subtitle}
                   </h6>
                 </div>
                 <p
@@ -237,6 +241,8 @@ class About extends ComponentWithModal {
                   onRemove={this.onRemoveSkill}
                   onAdd={this.onAddSkill}
                   readOnly={this.props.readOnly}
+                  index = {this.state.selectorIndex}
+                  setSelectors = {this.setSelectors}
                 />
                 <a href="#0" className="butn butn-bg ml-0">
                   <span>Contact Me</span>

@@ -56,9 +56,27 @@ h6:hover{
     width:  20px!important;
     height: 20px!important;
     margin-bottom: 0px!important;
+    z-index: 1;
 }
 .my-icon>i{
     position: absolute;
     right: 5px;
     top:4px;
+    color:red;
+}
+
+.icon-red{
+    color:red;
+}
+
+.my-gallery{
+    position: flex;
+}
+.my-add-work>div>div{
+    opacity: 1 !important;
+    transform: unset!important;
+}
+
+.my-note{
+    text-align: center !important;
 }

@@ -15,6 +15,7 @@ class ModalText extends Component {
           <h1>{this.props.contentLabel}</h1>
         </div>
         <hr />
+        {/* Campo opicional, descreve como a formatação do texto deve ser */}
         {this.props.description ? (
           <label>{this.props.description}</label>
         ) : null}
@@ -56,6 +57,9 @@ class ModalSkill extends Component {
   }
 
   render() {
+    if(!this.props.skill){
+      return null
+    }
     return (
       <Modal
         isOpen={this.props.isOpen}
@@ -99,11 +103,13 @@ class ModalSkill extends Component {
             Remover!
           </button>
         </div>
+        {/* 
+        Não é necessário, visto que foi adicionado outro botão fora do modal.
         <div>
           <button className="my-modal-button" onClick={this.onAddAndClose}>
             Adicionar Outra Skill
           </button>
-        </div>
+        </div> */}
       </Modal>
     );
   }

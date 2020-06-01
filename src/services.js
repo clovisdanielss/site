@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import ComponentWithModal from "./componentwithmodal";
+import SubHeader from './subheader'
 import { ModalText } from "./modal";
 import { render } from "react-dom";
+
 
 class Service extends Component {
   constructor(props) {
@@ -29,7 +31,7 @@ class Service extends Component {
     const h6font = props.index % 2 == 0 ? "" : "fg-light";
     const pfont = props.index % 2 == 0 ? "" : "fg-gray";
     const removeTrigger = props.readOnly ? null : props.onAddService ? null : (
-      <span className="icon my-icon" onClick={this.onRemoveService}>
+      <span className=" my-icon" onClick={this.onRemoveService}>
         <i className="fas fa-times"></i>
       </span> //
     );
@@ -76,6 +78,15 @@ class Services extends ComponentWithModal {
   constructor(props) {
     super(props);
     this.state = {
+      /*
+        Selector serve para pegar uma propriedade do objeto.
+        SelectorIndex serve para indicar o indice.
+      */
+      modalIsOpen: false,
+      selector: "",
+      selectorIndex: 0,
+      title: "Our Services",
+      subtitle: "Awesome Features",
       services: [
         {
           name: "Creative Design",
@@ -96,14 +107,6 @@ class Services extends ComponentWithModal {
           icon: "fas fa-hands",
         },
       ],
-      modalIsOpen: false,
-      /*
-        Selector serve para pegar uma propriedade do objeto.
-        SelectorIndex serve para indicar o indice.
-      */
-
-      selector: "",
-      selectorIndex: 0,
     };
 
     this.onAddService = this.onAddService.bind(this);
@@ -111,6 +114,7 @@ class Services extends ComponentWithModal {
     this.setSelectors = this.setSelectors.bind(this);
     this.onChangeValue = this.onChangeValue.bind(this);
   }
+
 
   componentDidUpdate() {
     console.log(this.state.selector, this.state.selectorIndex);
@@ -138,10 +142,10 @@ class Services extends ComponentWithModal {
   }
 
   onRemoveService(index) {
-    console.log("Index: ", index)
-    console.log("Removing...",this.state.services.splice(index, 1));
+    console.log("Index: ", index);
+    console.log("Removing...", this.state.services.splice(index, 1));
     let services = this.state.services;
-    this.setState({ services: services, selector:'',selectorIndex:0 });
+    this.setState({ services: services, selector: "", selectorIndex: 0 });
   }
 
   render() {
@@ -153,15 +157,23 @@ class Services extends ComponentWithModal {
           contentLabel="Edit Service"
           onChangeValue={this.onChangeValue}
           text={
-            this.state.services[this.state.selectorIndex][this.state.selector]
+            this.state.services.length === 0
+              ? ""
+              : this.state.services[this.state.selectorIndex][
+                  this.state.selector
+                ]
           }
         />
         <div className="container-fluid">
           <div className="row">
-            <div className="section-head text-center col-sm-12">
-              <h6>Awesome Features</h6>
-              <h4>Our Services</h4>
-            </div>
+            <SubHeader
+              text={this.state[this.state.selector]}
+              title={this.state.title}
+              subtitle={this.state.subtitle}
+              onChangeSubHeader={this.onChangeSubHeader}
+              setSelectors={this.setSelectors}
+              readOnly={this.props.readOnly}
+            />
             {this.state.services.map((service, key) => (
               <Service
                 setSelectors={this.setSelectors}

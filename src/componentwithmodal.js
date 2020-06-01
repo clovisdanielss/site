@@ -5,12 +5,19 @@ class ComponentWithModal extends Component {
       super(props);
       this.state = {
         modalIsOpen: false,
+        selector:"",
+        selectorIndex:0,
       };
       this.openModal = this.openModal.bind(this);
       this.closeModal = this.closeModal.bind(this);
       this.classNameHighlight = this.classNameHighlight.bind(this);
+      this.onChangeSubHeader = this.onChangeSubHeader.bind(this)
     }
   
+    onChangeSubHeader(e){
+      this.setState({[this.state.selector]:e.target.value})
+    }
+
     classNameHighlight(className) {
       return this.props.readOnly ? className : className + " highlight";
     }
