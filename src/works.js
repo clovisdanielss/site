@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ModalText } from "./modal";
+import { ModalText, ModalWork } from "./modal";
 import ComponentWithModal from "./componentwithmodal";
 import SubHeader from "./subheader";
 
@@ -7,6 +7,23 @@ class Work extends ComponentWithModal {
   constructor(props) {
     super(props);
     this.defineAndOpenModal = this.defineAndOpenModal.bind(this);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeSrc = this.onChangeSrc.bind(this);
+    this.onChangeFilter = this.onChangeFilter.bind(this);
+    this.onChangeSubtitle = this.onChangeSubtitle.bind(this);
+  }
+
+  onChangeName(e) {
+    this.props.onChangeWork(this.props.index, "name", e.target.value);
+  }
+  onChangeSrc(e) {
+    this.props.onChangeWork(this.props.index, "src", e.target.value);
+  }
+  onChangeFilter(e) {
+    this.props.onChangeWork(this.props.index, "filter", e.target.value);
+  }
+  onChangeSubtitle(e) {
+    this.props.onChangeWork(this.props.index, "subtitle", e.target.value);
   }
 
   defineAndOpenModal(e) {
@@ -14,9 +31,10 @@ class Work extends ComponentWithModal {
       // Não há necessidade de mandar um seletor, já que existe modal próprio
       // para este componente.
       this.props.setSelectors(this.props.index, "");
-      //this.openModal()
+      this.openModal()
     }
   }
+
 
   render() {
     const work = this.props.work;
@@ -36,8 +54,16 @@ class Work extends ComponentWithModal {
         onClick={this.props.onAddWork}
         className={"col-lg-4 col-md-6 items no-padding " + work.filter}
       >
+        <ModalWork
+          onChangeSubtitle={this.onChangeSubtitle}
+          onChangeName={this.onChangeName}
+          isOpen={this.state.modalIsOpen}
+          onRequestClose={this.closeModal}
+          contentLabel="Edit Work"
+          work={work}
+        />
         {removeTrigger}
-        <div className="item-img">
+        <div onClick={this.defineAndOpenModal} className="item-img">
           <img src={work.src} alt="image" />
           <div className="item-img-overlay">
             <div className="overlay-info full-width">
@@ -108,13 +134,15 @@ class Works extends ComponentWithModal {
     this.onRemoveFilter = this.onRemoveFilter.bind(this);
     this.onAddFilter = this.onAddFilter.bind(this);
     this.onChangeFilter = this.onChangeFilter.bind(this);
-    this.setSelectors = this.setSelectors.bind(this);
     this.onRemoveWork = this.onRemoveWork.bind(this);
     this.onAddWork = this.onAddWork.bind(this);
-    //this.onChangeWork = this.onChangeWork.bind(this)
+    this.onChangeWork = this.onChangeWork.bind(this);
     this.getAllFilters = this.getAllFilters.bind(this);
   }
 
+  /**
+   * Retorna todos os filtros existentes.
+   */
   getAllFilters() {
     let result = "";
     this.state.filters.map((filter) => {
@@ -123,12 +151,18 @@ class Works extends ComponentWithModal {
     return result;
   }
 
+  /**
+   * Remove componente Work
+   */
   onRemoveWork(index) {
     this.state.works.splice(index, 1);
     const works = this.state.works;
     this.setState({ works: works, selector: "", selectorIndex: 0 });
   }
 
+  /** 
+   * Adiciona componente Work
+   */
   onAddWork(e) {
     let works = this.state.works;
     works.push({
@@ -140,19 +174,27 @@ class Works extends ComponentWithModal {
     this.setState({ works: works });
   }
 
-  setSelectors(index, name) {
-    this.setState({
-      selector: name,
-      selectorIndex: index,
-    });
+  /**
+   * Modifica componente work, para um dado indice, seletor e valor.
+   */
+  onChangeWork(index, selector, value) {
+    this.state.works[index][selector] = value;
+    let works = this.state.works;
+    this.setState({ works: works });
   }
 
+  /**
+   * Remove o span de filtro.
+   */
   onRemoveFilter(index) {
     this.state.filters.splice(index, 1);
     const filters = this.state.filters;
     this.setState({ filters: filters, selector: "", selectorIndex: 0 });
   }
 
+  /**
+   * Modifica o span de filtro
+   */
   onChangeFilter(e) {
     this.state.filters[this.state.selectorIndex][this.state.selector] =
       e.target.value;
@@ -162,6 +204,9 @@ class Works extends ComponentWithModal {
     this.setState({ filters: filters });
   }
 
+  /**
+   * Adiciona um novo span de filtro.
+   */
   onAddFilter(e) {
     let filters = this.state.filters;
     filters.push({
@@ -171,10 +216,13 @@ class Works extends ComponentWithModal {
     this.setState({ filters: filters });
   }
 
+  /**
+   * Refaz o isotopo da galaria a cada atualização de componente.
+   */
   componentDidUpdate() {
-    console.log(this.state.works);
-    window.$gallery.isotope("destroy").isotope();
+       window.$gallery.isotope("destroy").isotope();
   }
+
   render() {
     return (
       <section className="works section-padding bg-gray" data-scroll-index="3">
@@ -202,10 +250,10 @@ class Works extends ComponentWithModal {
               readOnly={this.props.readOnly}
             />
             {this.props.readOnly ? null : (
-                <div className="section-head text-center col-sm-12" >
-                <h5 >Nota: Remover filtro não remove quadros associados.</h5>
-                </div>
-              )}
+              <div className="section-head text-center col-sm-12">
+                <h5>Nota: Remover filtro não remove quadros associados.</h5>
+              </div>
+            )}
             <div className="filtering text-center mb-30 col-sm-12">
               <div className="filter">
                 {this.state.filters.map((filter, key) => (
@@ -251,6 +299,7 @@ class Works extends ComponentWithModal {
                   onRemoveWork={this.onRemoveWork}
                   setSelectors={this.setSelectors}
                   readOnly={this.props.readOnly}
+                  onChangeWork={this.onChangeWork}
                 />
               ))}
               {this.props.readOnly ? null : (

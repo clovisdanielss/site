@@ -108,15 +108,8 @@ class About extends ComponentWithModal {
     this.onRemoveSkill = this.onRemoveSkill.bind(this);
     this.onAddSkill = this.onAddSkill.bind(this);
     this.defineAndOpenModal = this.defineAndOpenModal.bind(this);
-    this.setSelectors = this.setSelectors.bind(this);
   }
 
-  setSelectors(index, name) {
-    this.setState({
-      selectorIndex: index,
-      selector: name,
-    });
-  }
 
   /* O seletor define qual estado será modificado,
   assim como altera o conteúdo do modal de texto. */

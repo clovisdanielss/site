@@ -57,8 +57,8 @@ class ModalSkill extends Component {
   }
 
   render() {
-    if(!this.props.skill){
-      return null
+    if (!this.props.skill) {
+      return null;
     }
     return (
       <Modal
@@ -115,4 +115,47 @@ class ModalSkill extends Component {
   }
 }
 
-export { ModalText, ModalSkill };
+class ModalWork extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <Modal
+        isOpen={this.props.isOpen}
+        onRequestClose={this.props.onRequestClose}
+        contentLabel={this.props.contentLabel}
+      >
+        <div>
+          <h1>{this.props.contentLabel}</h1>
+        </div>
+        <hr />
+        <div>
+          <input
+            className="my-modal-textarea"
+            value={this.props.work.name}
+            onChange={this.props.onChangeName}
+          />
+        </div>
+        <div>
+          <input
+            className="my-modal-textarea"
+            value={this.props.work.subtitle}
+            onChange={this.props.onChangeSubtitle}
+          />
+        </div>
+        <div>
+          <button
+            className="my-modal-button"
+            onClick={this.props.onRequestClose}
+          >
+            Salvar!
+          </button>
+        </div>
+      </Modal>
+    );
+  }
+}
+
+export { ModalText, ModalSkill, ModalWork};

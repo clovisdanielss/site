@@ -12,6 +12,10 @@ class Service extends Component {
     this.onRemoveService = this.onRemoveService.bind(this);
   }
 
+  /** 
+   * Define um seletor para atualizar alguma propriedade do
+   * Serviço em questão, depois abre o modal.
+   */
   defineAndOpenModal(e) {
     if (!this.props.onAddService) {
       const selector = e.target.getAttribute("data-state");
@@ -20,6 +24,10 @@ class Service extends Component {
     }
   }
 
+  /**
+   * Remove algum serviço para o dado índice.
+   * Usado pelo 'x'
+   */
   onRemoveService() {
     this.props.onRemoveService(this.props.index);
   }
@@ -115,11 +123,10 @@ class Services extends ComponentWithModal {
     this.onChangeValue = this.onChangeValue.bind(this);
   }
 
-
-  componentDidUpdate() {
-    console.log(this.state.selector, this.state.selectorIndex);
-  }
-
+  /** 
+   * Modifica valor de um serviço de determinado indice para um 
+   * dado seletor.
+   */
   onChangeValue(e) {
     this.state.services[this.state.selectorIndex][this.state.selector] =
       e.target.value;
@@ -127,6 +134,9 @@ class Services extends ComponentWithModal {
     this.setState({ services: services });
   }
 
+  /**
+   * Adiciona um serviço em branco.
+   */
   onAddService() {
     let services = this.state.services;
     services.push({
@@ -137,12 +147,10 @@ class Services extends ComponentWithModal {
     this.setState({ services: services });
   }
 
-  setSelectors(selectorIndex, selector) {
-    this.setState({ selectorIndex: selectorIndex, selector: selector });
-  }
-
+  /** 
+   * Remove um serviço para um dado índice.
+   */
   onRemoveService(index) {
-    console.log("Index: ", index);
     console.log("Removing...", this.state.services.splice(index, 1));
     let services = this.state.services;
     this.setState({ services: services, selector: "", selectorIndex: 0 });
