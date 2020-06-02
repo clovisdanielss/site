@@ -8,14 +8,15 @@
 # testing
 /coverage
 
-!*/index.html
-!*/myCss.css
-!*/animate.headline.css
 
 # production
 /build
 /public
 
+!*/index.html
+!*/myCss.css
+!/public/js/animate.headline.js
+!/public/js/scripts.js
 
 # misc
 .DS_Store

@@ -17,6 +17,8 @@ class Work extends ComponentWithModal {
     this.props.onChangeWork(this.props.index, "name", e.target.value);
   }
   onChangeSrc(e) {
+    //Preciso dar post na figura depois.
+    console.log(e.target.files[0])
     this.props.onChangeWork(this.props.index, "src", e.target.value);
   }
   onChangeFilter(e) {
@@ -31,10 +33,9 @@ class Work extends ComponentWithModal {
       // Não há necessidade de mandar um seletor, já que existe modal próprio
       // para este componente.
       this.props.setSelectors(this.props.index, "");
-      this.openModal()
+      this.openModal();
     }
   }
-
 
   render() {
     const work = this.props.work;
@@ -57,6 +58,8 @@ class Work extends ComponentWithModal {
         <ModalWork
           onChangeSubtitle={this.onChangeSubtitle}
           onChangeName={this.onChangeName}
+          onChangeSrc={this.onChangeSrc}
+          onChangeFilter={this.onChangeFilter}
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Work"
@@ -160,7 +163,7 @@ class Works extends ComponentWithModal {
     this.setState({ works: works, selector: "", selectorIndex: 0 });
   }
 
-  /** 
+  /**
    * Adiciona componente Work
    */
   onAddWork(e) {
@@ -220,7 +223,9 @@ class Works extends ComponentWithModal {
    * Refaz o isotopo da galaria a cada atualização de componente.
    */
   componentDidUpdate() {
-       window.$gallery.isotope("destroy").isotope();
+    if (!this.props.readOnly) {
+      window.$gallery.isotope("destroy").isotope();
+    }
   }
 
   render() {

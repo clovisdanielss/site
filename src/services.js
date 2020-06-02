@@ -119,15 +119,14 @@ class Services extends ComponentWithModal {
 
     this.onAddService = this.onAddService.bind(this);
     this.onRemoveService = this.onRemoveService.bind(this);
-    this.setSelectors = this.setSelectors.bind(this);
-    this.onChangeValue = this.onChangeValue.bind(this);
+    this.onChangeService = this.onChangeService.bind(this);
   }
 
   /** 
    * Modifica valor de um serviço de determinado indice para um 
    * dado seletor.
    */
-  onChangeValue(e) {
+  onChangeService(e) {
     this.state.services[this.state.selectorIndex][this.state.selector] =
       e.target.value;
     let services = this.state.services;
@@ -163,7 +162,7 @@ class Services extends ComponentWithModal {
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Service"
-          onChangeValue={this.onChangeValue}
+          onChangeValue={this.onChangeService}
           text={
             this.state.services.length === 0
               ? ""

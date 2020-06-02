@@ -146,6 +146,20 @@ class ModalWork extends Component {
           />
         </div>
         <div>
+          <input
+            className="my-modal-textarea"
+            value={this.props.work.filter}
+            onChange={this.props.onChangeFilter}
+          />
+        </div>
+        <div>
+          <input
+            className="my-modal-textarea"
+            type="file"
+            onChange={this.props.onChangeSrc}
+          />
+        </div>
+        <div>
           <button
             className="my-modal-button"
             onClick={this.props.onRequestClose}

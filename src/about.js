@@ -102,7 +102,7 @@ class About extends ComponentWithModal {
         },
       ],
     };
-    this.onChangeValue = this.onChangeValue.bind(this);
+    this.onChangeAbout = this.onChangeAbout.bind(this);
     this.onChangeSkillName = this.onChangeSkillName.bind(this);
     this.onChangeSkillValue = this.onChangeSkillValue.bind(this);
     this.onRemoveSkill = this.onRemoveSkill.bind(this);
@@ -113,7 +113,7 @@ class About extends ComponentWithModal {
 
   /* O seletor define qual estado será modificado,
   assim como altera o conteúdo do modal de texto. */
-  onChangeValue(e) {
+  onChangeAbout(e) {
     const selector = this.state.selector;
     this.setState({ [selector]: e.target.value });
   }
@@ -193,7 +193,7 @@ class About extends ComponentWithModal {
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit About"
-          onChangeValue={this.onChangeValue}
+          onChangeValue={this.onChangeAbout}
           text={this.state[this.state.selector]}
         />
         <div className="container-fluid">
