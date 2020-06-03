@@ -80,3 +80,9 @@ h6:hover{
 .my-note{
     text-align: center !important;
 }
+.myzi1{
+    z-index: 1;
+}
+.my-row{
+    justify-content: center;
+}

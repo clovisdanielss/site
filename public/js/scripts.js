@@ -165,10 +165,13 @@ $(function () {
   wind.stellar();
 
   // countUp
-  $(".numbers .counter").countUp({
-    delay: 10,
-    time: 1500,
-  });
+  var url = new URL(document.URL);
+  if (url.pathname !== "/edit") {
+    $(".numbers .counter").countUp({
+      delay: 10,
+      time: 1500,
+    });
+  }
 });
 
 // === window When Loading === //

@@ -97,7 +97,7 @@ class Numbers extends ComponentWithModal {
   onAddNumber() {
     let numbers = this.state.numbers;
     numbers.push({
-      icon: "fas fa-indefinido",
+      icon: "fas fa-question",
       name: "indefinido",
       value: "100",
     });
@@ -134,8 +134,13 @@ class Numbers extends ComponentWithModal {
                 ]
           }
         />
+        {this.props.readOnly ? null : (
+              <div className="section-head text-center col-sm-12 myzi1">
+                <h5 className="fg-light">Nota: Animação numérica desabilitada para edição.</h5>
+              </div>
+        )}
         <div className="container">
-          <div className="row">
+          <div className="row my-row">
             {this.state.numbers.map((number, key) => (
               <Number
                 number={number}

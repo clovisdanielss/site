@@ -28,7 +28,7 @@ class SubHeader extends ComponentWithModal {
             }
           />
           <h6 data-state="subtitle" className={this.classNameHighlight()} onClick={this.defineAndOpenModal}>{this.props.subtitle}</h6>
-          <h4 data-state="title" className={this.classNameHighlight()} onClick={this.defineAndOpenModal}>{this.props.title}</h4>
+          <h4 data-state="title" className={this.classNameHighlight(this.props.classTitle)} onClick={this.defineAndOpenModal}>{this.props.title}</h4>
         </div>
       );
     }

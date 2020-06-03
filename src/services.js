@@ -141,7 +141,7 @@ class Services extends ComponentWithModal {
     services.push({
       name: "Indefinido",
       description: "Indefinida",
-      icon: "fas fa-undefined",
+      icon: "fas fa-question",
     });
     this.setState({ services: services });
   }

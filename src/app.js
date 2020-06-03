@@ -5,6 +5,9 @@ import About from "./about";
 import Services from "./services";
 import Works from "./works";
 import Numbers from './numbers'
+import Clients from './clients'
+import Contact from './contact'
+import Footer from './footer'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 function Loading() {
   return (
@@ -24,6 +27,9 @@ function Site(props) {
       <Services readOnly={props.readOnly} />
       <Works readOnly={props.readOnly} />
       <Numbers readOnly={props.readOnly} />
+      <Clients readOnly={props.readOnly} />
+      <Contact readOnly={props.readOnly}/>
+      <Footer readOnly={props.readOnly}/>
     </div>
   );
 }
