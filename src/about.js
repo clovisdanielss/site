@@ -9,7 +9,7 @@ class Skill extends Component {
   }
 
   defineAndOpenModal(e) {
-    this.props.setSelectors(this.props.index,null);
+    this.props.setSelectors(this.props.index, null);
     this.props.openModal();
   }
   render() {
@@ -25,11 +25,19 @@ class Skill extends Component {
   }
 }
 
+
 class Skills extends ComponentWithModal {
+  route = "/about/skills"
+
   constructor(props) {
     super(props);
   }
 
+  closeModal(){
+    console.log("skills: ",this.props.skills)
+    /** Ajustar remover... */
+    ComponentWithModal.prototype.closeModal.apply(this,[this.props.skills])
+  }
 
   render() {
     return (
@@ -82,25 +90,10 @@ class About extends ComponentWithModal {
       modalIsOpen: false,
       selector: "",
       selectorIndex: 0,
-      title: "About",
-      subtitle: "UI / UX Designer & Developer",
-
-      text:
-        "I am Clóvis, I am a graphic and web designer, and" +
-        "I'm very passionate and dedicated to my work. With 7 years" +
-        "experience as a graphic designer.",
-      skills: [
-        {
-          id: 0,
-          name: "Web Designer",
-          value: "90%",
-        },
-        {
-          id: 1,
-          name: "Developer",
-          value: "30%",
-        },
-      ],
+      title: props.about.title,
+      subtitle: props.about.subtitle,
+      text: props.about.text,
+      skills: props.about.skills,
     };
     this.onChangeAbout = this.onChangeAbout.bind(this);
     this.onChangeSkillName = this.onChangeSkillName.bind(this);
@@ -109,7 +102,6 @@ class About extends ComponentWithModal {
     this.onAddSkill = this.onAddSkill.bind(this);
     this.defineAndOpenModal = this.defineAndOpenModal.bind(this);
   }
-
 
   /* O seletor define qual estado será modificado,
   assim como altera o conteúdo do modal de texto. */
@@ -234,8 +226,8 @@ class About extends ComponentWithModal {
                   onRemove={this.onRemoveSkill}
                   onAdd={this.onAddSkill}
                   readOnly={this.props.readOnly}
-                  index = {this.state.selectorIndex}
-                  setSelectors = {this.setSelectors}
+                  index={this.state.selectorIndex}
+                  setSelectors={this.setSelectors}
                 />
                 <a href="#0" className="butn butn-bg ml-0">
                   <span>Contact Me</span>

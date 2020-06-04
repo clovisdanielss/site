@@ -9,8 +9,8 @@ class Contact extends ComponentWithModal {
       modalIsOpen: false,
       selector: "",
       selectorIndex: 0,
-      title: "Contact Us",
-      subtitle: "Get In Touch With Us",
+      title: props.contact.title,
+      subtitle: props.contact.subtitle,
     };
 
     this.onSubmit = this.onSubmit.bind(this)

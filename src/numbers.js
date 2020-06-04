@@ -58,23 +58,12 @@ class Numbers extends ComponentWithModal {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      subtitle: "",
+      title: props.numbers.title,
+      subtitle: props.numbers.subtitle,
       selector: "",
       selectorIndex: 0,
       modalIsOpen: false,
-      numbers: [
-        {
-          icon: "fas fa-trophy",
-          name: "awards achieved",
-          value: 168,
-        },
-        {
-          icon: "fas fa-layer-group",
-          name: "done projects",
-          value: "946",
-        },
-      ],
+      numbers: props.numbers.numbers
     };
 
     this.onRemoveNumber = this.onRemoveNumber.bind(this);

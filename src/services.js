@@ -93,28 +93,9 @@ class Services extends ComponentWithModal {
       modalIsOpen: false,
       selector: "",
       selectorIndex: 0,
-      title: "Our Services",
-      subtitle: "Awesome Features",
-      services: [
-        {
-          name: "Creative Design",
-          description:
-            "A decade ago, we founded Melinda with the goal of creating meaningful digital experiences.",
-          icon: "fas fa-pencil-ruler",
-        },
-        {
-          name: "Modern Styles",
-          description:
-            "A decade ago, we founded Melinda with the goal of creating meaningful digital experiences.",
-          icon: "fas fa-layer-group",
-        },
-        {
-          name: "Friendship",
-          description:
-            "A decade ago, we founded Melinda with the goal of creating meaningful digital experiences.",
-          icon: "fas fa-hands",
-        },
-      ],
+      title: props.services.title,
+      subtitle: props.services.subtitle,
+      services: props.services.services
     };
 
     this.onAddService = this.onAddService.bind(this);

@@ -22,7 +22,7 @@ class Header extends ComponentWithModal {
   constructor(props) {
     super(props);
     this.state = {
-      sentences: ["I Am", "Clóvis", "Developer", "Freelancer"],
+      sentences: props.header.sentences,
       modalIsOpen: false,
     };
     this.onChangeValue = this.onChangeValue.bind(this)

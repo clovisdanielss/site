@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { post } from "./loaddata";
 /**
  * Todo editável do sistema herda desta classe, onde:
  * existe um selector para selecionar propriedades de objetos.
@@ -6,6 +7,8 @@ import React, { Component } from "react";
  * Com estes atributos no estado é possível editar o modal.
  */
 class ComponentWithModal extends Component {
+  route = "/";
+
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +26,7 @@ class ComponentWithModal extends Component {
   setSelectors(selectorIndex, selector) {
     this.setState({ selectorIndex: selectorIndex, selector: selector });
   }
-  
+
   onChangeSubHeader(e) {
     this.setState({ [this.state.selector]: e.target.value });
   }
@@ -40,11 +43,30 @@ class ComponentWithModal extends Component {
     }
   }
 
-  closeModal() {
+  closeModal(data) {
     /*
         Aqui ocorrerá a persistência.
       */
+
     console.log("Should work!", this.state);
+    let toSubmit = {};
+    if (!data) {
+      data = this.state;
+      for (let ele in data) {
+        if (
+          ele !== "modalIsOpen" &&
+          ele !== "selector" &&
+          ele !== "selectorIndex" &&
+          ele !== "id"
+        ) {
+          toSubmit[ele] = data[ele];
+        }
+      }
+    } else {
+      toSubmit = data;
+    }
+    console.log(data, toSubmit);
+    post(this.route, toSubmit);
     this.setState({ modalIsOpen: false });
   }
 }

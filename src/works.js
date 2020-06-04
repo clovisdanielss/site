@@ -92,46 +92,10 @@ class Works extends ComponentWithModal {
       selector: "",
       selectorIndex: 0,
       modalIsOpen: false,
-      title: "Our Portfolio",
-      subtitle: "Latest Creative Work",
-      filters: [
-        {
-          name: "All",
-          dataFilter: "*",
-        },
-        {
-          name: "Brand",
-          dataFilter: ".brand",
-        },
-        {
-          name: "Design",
-          dataFilter: ".design",
-        },
-        {
-          name: "Marketing",
-          dataFilter: ".marketing",
-        },
-      ],
-      works: [
-        {
-          name: "Web Design",
-          subtitle: "Logo | Branding",
-          src: "img/portfolio/2.jpg",
-          filter: "brand",
-        },
-        {
-          name: "Trabalho 2",
-          subtitle: "Sem criatividade",
-          src: "img/portfolio/2.jpg",
-          filter: "design",
-        },
-        {
-          name: "Trabalho 3",
-          subtitle: "Sem criatividade 2",
-          src: "img/portfolio/2.jpg",
-          filter: "marketing",
-        },
-      ],
+      title: props.works.title,
+      subtitle: props.works.subtitle,
+      filters: props.works.filters,
+      works: props.works.works,
     };
 
     this.onRemoveFilter = this.onRemoveFilter.bind(this);
