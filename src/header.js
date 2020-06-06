@@ -19,6 +19,7 @@ const Sentences = (props) => {
 };
 
 class Header extends ComponentWithModal {
+  route = '/header'
   constructor(props) {
     super(props);
     this.state = {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ModalText, ModalSkil, ModalSkill } from "./modal";
+import { ModalText, ModalSkill } from "./modal";
 import ComponentWithModal from "./componentwithmodal";
 
 class Skill extends Component {
@@ -25,18 +25,26 @@ class Skill extends Component {
   }
 }
 
-
 class Skills extends ComponentWithModal {
-  route = "/about/skills"
+  route = "/about/skills";
 
   constructor(props) {
     super(props);
+    this.onRemove = this.onRemove.bind(this);
   }
 
-  closeModal(){
-    console.log("skills: ",this.props.skills)
+  onRemove(e) {
+    let index = parseInt(e.target.getAttribute("data-index"));
+    this.props.onRemove(index);
+    setTimeout(() => {
+      ComponentWithModal.prototype.closeModal.apply(this, [this.props.skills]);
+    }, 500);
+  }
+
+  closeModal() {
+    console.log("skills: ", this.props.skills);
     /** Ajustar remover... */
-    ComponentWithModal.prototype.closeModal.apply(this,[this.props.skills])
+    ComponentWithModal.prototype.closeModal.apply(this, [this.props.skills]);
   }
 
   render() {
@@ -45,7 +53,6 @@ class Skills extends ComponentWithModal {
         <ModalSkill
           onChangeValue={this.props.onChangeValue}
           onChangeName={this.props.onChangeName}
-          onRemove={this.props.onRemove}
           onAdd={this.props.onAdd}
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
@@ -55,14 +62,16 @@ class Skills extends ComponentWithModal {
         {this.props.skills.map((skill, key) => {
           return (
             <div key={key} className={this.classNameHighlight()}>
+              {this.props.readOnly ? null : (
+                <span className=" my-icon-about" onClick={this.onRemove} data-index={key}>
+                  <i className="fas fa-times" data-index={key}></i>
+                </span> //
+              )}
               <Skill
                 skill={skill}
                 setSelectors={this.props.setSelectors}
                 index={key}
                 openModal={this.openModal}
-                onChangeValue={this.props.onChangeValue}
-                onChangeName={this.props.onChangeName}
-                onRemove={this.props.onRemove}
               />
             </div>
           );
@@ -84,6 +93,8 @@ class Skills extends ComponentWithModal {
 }
 
 class About extends ComponentWithModal {
+  route = '/about'
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -110,6 +121,20 @@ class About extends ComponentWithModal {
     this.setState({ [selector]: e.target.value });
   }
 
+  /*Muda o nome da skill*/
+  onChangeSkillName(e) {
+    let idSkill = e.target.getAttribute("data-id");
+    idSkill = parseInt(idSkill);
+    let skills = [];
+    this.state.skills.map((skill) => {
+      if (skill.id === idSkill) {
+        skill.name = e.target.value;
+      }
+      skills.push(skill);
+    });
+    this.setState({ skills: skills });
+  }
+
   /*Muda a percentagem da skill*/
   onChangeSkillValue(e) {
     let idSkill = e.target.getAttribute("data-id");
@@ -125,15 +150,9 @@ class About extends ComponentWithModal {
   }
 
   /*Remove a skill*/
-  onRemoveSkill(e) {
-    let idSkill = e.target.getAttribute("data-id");
-    idSkill = parseInt(idSkill);
-    let skills = [];
-    this.state.skills.map((skill) => {
-      if (skill.id !== idSkill) {
-        skills.push(skill);
-      }
-    });
+  onRemoveSkill(index) {
+    let skills = this.state.skills;
+    skills.splice(index, 1);
     this.setState({ skills: skills });
   }
 
@@ -150,20 +169,6 @@ class About extends ComponentWithModal {
       id: mid,
       name: "Indefinido",
       value: "0%",
-    });
-    this.setState({ skills: skills });
-  }
-
-  /*Muda o nome da skill*/
-  onChangeSkillName(e) {
-    let idSkill = e.target.getAttribute("data-id");
-    idSkill = parseInt(idSkill);
-    let skills = [];
-    this.state.skills.map((skill) => {
-      if (skill.id === idSkill) {
-        skill.name = e.target.value;
-      }
-      skills.push(skill);
     });
     this.setState({ skills: skills });
   }

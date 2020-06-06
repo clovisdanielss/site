@@ -42,19 +42,13 @@ class ModalText extends Component {
 class ModalSkill extends Component {
   constructor(props) {
     super(props);
-    this.onAddAndClose = this.onAddAndClose.bind(this);
-    this.onRemoveAndClose = this.onRemoveAndClose.bind(this);
-  }
+    this.onAddAndClose = this.onAddAndClose.bind(this);  }
 
   onAddAndClose() {
     this.props.onAdd();
     this.props.onRequestClose();
   }
 
-  onRemoveAndClose(e) {
-    this.props.onRemove(e);
-    this.props.onRequestClose();
-  }
 
   render() {
     if (!this.props.skill) {
@@ -94,7 +88,7 @@ class ModalSkill extends Component {
             Salvar!
           </button>
         </div>
-        <div>
+        {/* <div>
           <button
             data-id={this.props.skill.id}
             className="my-modal-button"
@@ -102,7 +96,7 @@ class ModalSkill extends Component {
           >
             Remover!
           </button>
-        </div>
+        </div> */}
         {/* 
         Não é necessário, visto que foi adicionado outro botão fora do modal.
         <div>

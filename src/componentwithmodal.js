@@ -43,29 +43,29 @@ class ComponentWithModal extends Component {
     }
   }
 
-  closeModal(data) {
+  closeModal(e) {
     /*
         Aqui ocorrerá a persistência.
       */
 
     console.log("Should work!", this.state);
     let toSubmit = {};
-    if (!data) {
-      data = this.state;
-      for (let ele in data) {
+    if (e.target) {
+      e = this.state;
+      for (let ele in e) {
         if (
           ele !== "modalIsOpen" &&
           ele !== "selector" &&
           ele !== "selectorIndex" &&
           ele !== "id"
         ) {
-          toSubmit[ele] = data[ele];
+          toSubmit[ele] = e[ele];
         }
       }
     } else {
-      toSubmit = data;
+      toSubmit = e;
     }
-    console.log(data, toSubmit);
+    console.log("A submeter ... ", toSubmit);
     post(this.route, toSubmit);
     this.setState({ modalIsOpen: false });
   }
