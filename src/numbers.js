@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ComponentWithModal from "./componentwithmodal";
-import { ModalText } from "./modal";
+import { ModalDefault } from "./modal";
 
 class Number extends Component {
   constructor(props) {
@@ -39,9 +39,11 @@ class Number extends Component {
       <div className="col-lg-3 col-md-6" onClick={this.props.onAddNumber}>
         {removeTrigger}
         <div className="item text-center mb-md50">
+          <div className={this.props.classNameHighlight()}>
           <span className="icon" data-state="icon" onClick={this.defineAndOpenModal}>
             <i className={this.props.number.icon} data-state="icon"></i>
           </span>
+          </div>
           <h3 onClick={this.defineAndOpenModal} data-state="value" className={this.props.classNameHighlight("counter")}>
             {this.props.number.value}
           </h3>
@@ -55,6 +57,7 @@ class Number extends Component {
 }
 
 class Numbers extends ComponentWithModal {
+  route = "/numbers"
   constructor(props) {
     super(props);
     this.state = {
@@ -78,6 +81,7 @@ class Numbers extends ComponentWithModal {
     this.state.numbers.splice(index, 1);
     let numbers = this.state.numbers;
     this.setState({ numbers: numbers });
+    this.closeModal(this.state)
   }
 
   /**
@@ -110,7 +114,7 @@ class Numbers extends ComponentWithModal {
         data-overlay-dark="7"
         data-background="img/bg-counter.jpg"
       >
-          <ModalText
+          <ModalDefault
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Number"

@@ -1,6 +1,6 @@
 import React from "react";
 import ComponentWithModal from "./componentwithmodal";
-import {ModalText} from './modal'
+import {ModalDefault} from './modal'
 
 const Sentences = (props) => {
   return (
@@ -47,7 +47,7 @@ class Header extends ComponentWithModal {
   render() {
     return (
       <header className="header slider-fade" data-scroll-index="0">
-        <ModalText
+        <ModalDefault
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Header"

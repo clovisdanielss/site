@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ModalText, ModalSkill } from "./modal";
+import { ModalDefault, ModalSkill } from "./modal";
 import ComponentWithModal from "./componentwithmodal";
 
 class Skill extends Component {
@@ -37,7 +37,7 @@ class Skills extends ComponentWithModal {
     let index = parseInt(e.target.getAttribute("data-index"));
     this.props.onRemove(index);
     setTimeout(() => {
-      ComponentWithModal.prototype.closeModal.apply(this, [this.props.skills]);
+      this.closeModal(this.props.skills);
     }, 500);
   }
 
@@ -101,6 +101,7 @@ class About extends ComponentWithModal {
       modalIsOpen: false,
       selector: "",
       selectorIndex: 0,
+      src:props.about.src,
       title: props.about.title,
       subtitle: props.about.subtitle,
       text: props.about.text,
@@ -186,18 +187,21 @@ class About extends ComponentWithModal {
         className="about section-padding no-padding"
         data-scroll-index="1"
       >
-        <ModalText
+        <ModalDefault
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit About"
           onChangeValue={this.onChangeAbout}
           text={this.state[this.state.selector]}
+          isImage={this.state.selector === 'src'}
         />
         <div className="container-fluid">
           <div className="row">
             <div
-              className="col-md-5 col-sm-12 col-xs-12 bg-img cover-bg sm-height-550px xs-height-350px hero-bg "
-              data-background="img/about/hero.png"
+              className={this.classNameHighlight("col-md-5 col-sm-12 col-xs-12 bg-img cover-bg sm-height-550px xs-height-350px hero-bg ")}
+              data-background={this.state.src}
+              onClick={this.defineAndOpenModal}
+              data-state="src"
             ></div>
             <div className="col-md-7 col-sm-12 col-xs-12 bg-dark pd-60 pl-sm10 pr-sm10">
               <div className="cent">

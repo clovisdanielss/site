@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import ComponentWithModal from './componentwithmodal'
-import { ModalText } from "./modal";
+import { ModalDefault } from "./modal";
 
 
 class SubHeader extends ComponentWithModal {
@@ -18,7 +18,7 @@ class SubHeader extends ComponentWithModal {
     render() {
       return (
         <div className="section-head text-center col-sm-12">
-          <ModalText
+          <ModalDefault
             isOpen={this.state.modalIsOpen}
             onRequestClose={this.closeModal}
             contentLabel="Edit SubHeader"

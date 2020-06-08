@@ -1,14 +1,20 @@
-import React from "react";
+import React,{Component} from "react";
 import Navbar from "./navbar";
 import Header from "./header";
 import About from "./about";
 import Services from "./services";
 import Works from "./works";
-import Numbers from './numbers';
-import jsonSite from './json/site.json';
-import Contact from './contact'
-import Footer from './footer'
+import Numbers from "./numbers";
+import Contact from "./contact";
+import Footer from "./footer";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { getSite } from "./loaddata";
+
+// O json do site é carregado no cabeçalho HTML
+// const jsonSite = window.site
+let jsonSite = window.site 
+// getSite(jsonSite);
+
 function Loading() {
   return (
     <div className="loading">
@@ -20,32 +26,34 @@ function Loading() {
 function Site(props) {
   return (
     <div className="">
-      <Loading  />
-      <Navbar  />
-      <Header readOnly={props.readOnly} header={jsonSite.header}/>
-      <About readOnly={props.readOnly}  about={jsonSite.about}/>
-      <Services readOnly={props.readOnly} services={jsonSite.services}/>
-      <Works readOnly={props.readOnly} works={jsonSite.works}/>
-      <Numbers readOnly={props.readOnly} numbers={jsonSite.numbers}/>
-      <Contact readOnly={props.readOnly} contact={jsonSite.contact}/>
+      <Loading />
+      <Navbar />
+      <Header readOnly={props.readOnly} header={jsonSite.header} />
+      <About readOnly={props.readOnly} about={jsonSite.about} />
+      <Services readOnly={props.readOnly} services={jsonSite.services} />
+      <Works readOnly={props.readOnly} works={jsonSite.works} />
+      <Numbers readOnly={props.readOnly} numbers={jsonSite.numbers} />
+      <Contact readOnly={props.readOnly} contact={jsonSite.contact} />
       <Footer readOnly={props.readOnly} />
     </div>
   );
 }
 
-function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route path="/edit">
-          <Site />
-        </Route>
-        <Route path="/">
-          <Site readOnly={true}/>
-        </Route>
-      </Switch>
-    </Router>
-  );
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/edit">
+            <Site />
+          </Route>
+          <Route path="/">
+            <Site readOnly={true} />
+          </Route>
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;

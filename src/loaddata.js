@@ -1,6 +1,12 @@
 import axios from "axios";
 
-function get(route, component, initialize) {}
+function getSite(site) {
+    let url = "./json/site.json"
+    axios.get(url).then((response)=>{
+        console.log("Resposta",  response.data)
+        site = response.data
+    })
+}
 
 function post(route, data) {
     let url = process.env.REACT_APP_API + route
@@ -11,4 +17,4 @@ function post(route, data) {
     })
 }
 
-export { get, post };
+export { getSite, post };

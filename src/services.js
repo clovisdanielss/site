@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ComponentWithModal from "./componentwithmodal";
 import SubHeader from './subheader'
-import { ModalText } from "./modal";
+import { ModalDefault } from "./modal";
 import { render } from "react-dom";
 
 
@@ -51,6 +51,7 @@ class Service extends Component {
       >
         <div className={bkg}>
           {removeTrigger}
+          <div className={props.classNameHighlight()}>
           <span
             className="icon"
             onClick={this.defineAndOpenModal}
@@ -62,6 +63,7 @@ class Service extends Component {
               className={props.service.icon}
             ></i>
           </span>
+          </div>
           <h6
             data-state={"name"}
             className={props.classNameHighlight(h6font)}
@@ -83,6 +85,7 @@ class Service extends Component {
 }
 
 class Services extends ComponentWithModal {
+  route = '/services'
   constructor(props) {
     super(props);
     this.state = {
@@ -131,15 +134,18 @@ class Services extends ComponentWithModal {
    * Remove um serviço para um dado índice.
    */
   onRemoveService(index) {
-    console.log("Removing...", this.state.services.splice(index, 1));
+    this.state.services.splice(index, 1)
     let services = this.state.services;
     this.setState({ services: services, selector: "", selectorIndex: 0 });
+    setTimeout(() => {
+      this.closeModal(this.state)
+    }, 500);
   }
 
   render() {
     return (
       <section className="services section-padding" data-scroll-index="2">
-        <ModalText
+        <ModalDefault
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Service"

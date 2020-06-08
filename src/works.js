@@ -1,9 +1,11 @@
 import React, { Component } from "react";
-import { ModalText, ModalWork } from "./modal";
+import { ModalDefault, ModalWork } from "./modal";
 import ComponentWithModal from "./componentwithmodal";
 import SubHeader from "./subheader";
-
+import { post } from "./loaddata";
 class Work extends ComponentWithModal {
+  //Adiciona novo elemento, ao invés de substituir todos.
+  route = "/works/works";
   constructor(props) {
     super(props);
     this.defineAndOpenModal = this.defineAndOpenModal.bind(this);
@@ -11,6 +13,7 @@ class Work extends ComponentWithModal {
     this.onChangeSrc = this.onChangeSrc.bind(this);
     this.onChangeFilter = this.onChangeFilter.bind(this);
     this.onChangeSubtitle = this.onChangeSubtitle.bind(this);
+    this.onRemoveWork = this.onRemoveWork.bind(this);
   }
 
   onChangeName(e) {
@@ -18,14 +21,33 @@ class Work extends ComponentWithModal {
   }
   onChangeSrc(e) {
     //Preciso dar post na figura depois.
-    console.log(e.target.files[0])
-    this.props.onChangeWork(this.props.index, "src", e.target.value);
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = (e) => {
+      if (e.target && e.target.result) {
+        const buffer = Buffer.from(e.target.result).toJSON();
+        post("/upload", {data:buffer,name:file.name});
+      }
+    };
+    this.props.onChangeWork(
+      this.props.index,
+      "src",
+      "img/" + e.target.files[0].name
+    );
   }
   onChangeFilter(e) {
     this.props.onChangeWork(this.props.index, "filter", e.target.value);
   }
   onChangeSubtitle(e) {
     this.props.onChangeWork(this.props.index, "subtitle", e.target.value);
+  }
+  onRemoveWork(e) {
+    this.props.onRemoveWork(this.props.index);
+  }
+  closeModal() {
+    ComponentWithModal.prototype.closeModal.apply(this, [this.props.works]);
+    window.location.reload()
   }
 
   defineAndOpenModal(e) {
@@ -41,19 +63,14 @@ class Work extends ComponentWithModal {
     const work = this.props.work;
     const removeTrigger = this.props.readOnly ? null : this.props
         .onAddWork ? null : (
-      <span
-        className="icon my-icon"
-        onClick={() => {
-          this.props.onRemoveWork(this.props.index);
-        }}
-      >
+      <span className="icon my-icon" onClick={this.onRemoveWork}>
         <i className="fas fa-times"></i>
       </span>
     );
     return (
       <div
         onClick={this.props.onAddWork}
-        className={"col-lg-4 col-md-6 items no-padding " + work.filter}
+        className={this.classNameHighlight("col-lg-4 col-md-6 items no-padding " + work.filter)}
       >
         <ModalWork
           onChangeSubtitle={this.onChangeSubtitle}
@@ -66,13 +83,13 @@ class Work extends ComponentWithModal {
           work={work}
         />
         {removeTrigger}
-        <div onClick={this.defineAndOpenModal} className="item-img">
+        <div onClick={this.defineAndOpenModal} className={"item-img"}>
           <img src={work.src} alt="image" />
           <div className="item-img-overlay">
             <div className="overlay-info full-width">
               <p onClick={this.defineAndOpenModal}>{work.subtitle}</p>
               <h3 onClick={this.defineAndOpenModal}>{work.name}</h3>
-              <a href="img/portfolio/1.jpg" className="popimg">
+              <a href={work.src} className="popimg">
                 <span className="icon">
                   <i className="fas fa-search-plus"></i>
                 </span>
@@ -86,6 +103,7 @@ class Work extends ComponentWithModal {
 }
 
 class Works extends ComponentWithModal {
+  route = "/works";
   constructor(props) {
     super(props);
     this.state = {
@@ -125,6 +143,9 @@ class Works extends ComponentWithModal {
     this.state.works.splice(index, 1);
     const works = this.state.works;
     this.setState({ works: works, selector: "", selectorIndex: 0 });
+    setTimeout(() => {
+      this.closeModal(this.state);
+    }, 500);
   }
 
   /**
@@ -133,10 +154,10 @@ class Works extends ComponentWithModal {
   onAddWork(e) {
     let works = this.state.works;
     works.push({
-      name: "indefinido",
+      name: "nome indefinido",
       src: "img/portfolio/1.jpg",
-      subtitle: "indefinido",
-      filter: "indefinido",
+      subtitle: "subtitulo indefinido",
+      filter: "filtro indefinido",
     });
     this.setState({ works: works });
   }
@@ -195,7 +216,7 @@ class Works extends ComponentWithModal {
   render() {
     return (
       <section className="works section-padding bg-gray" data-scroll-index="3">
-        <ModalText
+        <ModalDefault
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Filters"
@@ -264,6 +285,7 @@ class Works extends ComponentWithModal {
                 <Work
                   key={key}
                   work={work}
+                  works={this.state.works}
                   index={key}
                   onRemoveWork={this.onRemoveWork}
                   setSelectors={this.setSelectors}

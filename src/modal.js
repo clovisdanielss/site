@@ -3,7 +3,7 @@ import Modal from "react-modal";
 
 Modal.setAppElement("#root");
 
-class ModalText extends Component {
+class ModalDefault extends Component {
   render() {
     return (
       <Modal
@@ -19,19 +19,26 @@ class ModalText extends Component {
         {this.props.description ? (
           <label>{this.props.description}</label>
         ) : null}
+        {this.props.isImage?
         <div>
+          <label>File:</label>
+          <input type="file" onChange={this.props.onChangeSrc}></input>
+        </div>
+        :
+        <div>
+          <label>Text:</label>
           <textarea
             className="my-modal-textarea"
             value={this.props.text}
             onChange={this.props.onChangeValue}
           />
-        </div>
+        </div>}
         <div>
           <button
             className="my-modal-button"
             onClick={this.props.onRequestClose}
           >
-            Salvar!
+            Save!
           </button>
         </div>
       </Modal>
@@ -65,6 +72,7 @@ class ModalSkill extends Component {
         </div>
         <hr />
         <div>
+          <label>Skill:</label>
           <input
             className="my-modal-textarea"
             value={this.props.skill.name}
@@ -73,6 +81,7 @@ class ModalSkill extends Component {
           />
         </div>
         <div>
+          <label>Value:</label>
           <input
             className="my-modal-textarea"
             value={this.props.skill.value}
@@ -85,7 +94,7 @@ class ModalSkill extends Component {
             className="my-modal-button"
             onClick={this.props.onRequestClose}
           >
-            Salvar!
+            Save!
           </button>
         </div>
         {/* <div>
@@ -126,6 +135,7 @@ class ModalWork extends Component {
         </div>
         <hr />
         <div>
+          <label>Title:</label>
           <input
             className="my-modal-textarea"
             value={this.props.work.name}
@@ -133,6 +143,7 @@ class ModalWork extends Component {
           />
         </div>
         <div>
+          <label>Subtitle:</label>
           <input
             className="my-modal-textarea"
             value={this.props.work.subtitle}
@@ -140,6 +151,7 @@ class ModalWork extends Component {
           />
         </div>
         <div>
+          <label>Filter Tag:</label>
           <input
             className="my-modal-textarea"
             value={this.props.work.filter}
@@ -147,6 +159,7 @@ class ModalWork extends Component {
           />
         </div>
         <div>
+          <label>File:</label>
           <input
             className="my-modal-textarea"
             type="file"
@@ -158,7 +171,7 @@ class ModalWork extends Component {
             className="my-modal-button"
             onClick={this.props.onRequestClose}
           >
-            Salvar!
+            Save!
           </button>
         </div>
       </Modal>
@@ -183,6 +196,7 @@ class ModalClient extends Component {
         </div>
         <hr />
         <div>
+        <label>Title:</label>
           <input
             className="my-modal-textarea"
             value={this.props.client.title}
@@ -190,6 +204,7 @@ class ModalClient extends Component {
           />
         </div>
         <div>
+        <label>Subtitle:</label>
           <input
             className="my-modal-textarea"
             value={this.props.client.subtitle}
@@ -197,6 +212,7 @@ class ModalClient extends Component {
           />
         </div>
         <div>
+          <label>Description:</label>
           <textarea
             className="my-modal-textarea"
             value={this.props.client.text}
@@ -208,7 +224,7 @@ class ModalClient extends Component {
             className="my-modal-button"
             onClick={this.props.onRequestClose}
           >
-            Salvar!
+            Save!
           </button>
         </div>
       </Modal>
@@ -216,4 +232,4 @@ class ModalClient extends Component {
   }
 }
 
-export { ModalText, ModalSkill, ModalWork, ModalClient };
+export { ModalDefault, ModalSkill, ModalWork, ModalClient };

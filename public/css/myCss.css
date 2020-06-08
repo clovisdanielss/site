@@ -15,7 +15,7 @@ h6:hover{
     margin-left: 10px;
 }
 .highlight:hover{
-    background-color: rgba(200,200,200, .3);
+    background-color:  rgba(189, 180, 180, 0.3);
 }
 
 .my-menu{
@@ -43,7 +43,9 @@ h6:hover{
 .my-modal-button{
     width: 100%;
 }
-
+.my-modal-button{
+    margin-top: 20px;
+}
 .my-serv-item{
     height: 100%;
 }
