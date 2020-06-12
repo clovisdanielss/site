@@ -8,9 +8,6 @@ class Footer extends ComponentWithModal{
         return <footer className="text-center one-footer">
             <div className="container">
 
-                <a className="logo" href="#">
-                    <img src="img/logo-footer.png" alt="logo" />          
-                </a>
                 
                 <div className="social">
                     <a href="#0" className="icon">

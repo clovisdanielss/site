@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { ModalDefault, ModalSkill } from "./modal";
 import ComponentWithModal from "./componentwithmodal";
-
+import {post} from './loaddata'
 class Skill extends Component {
   constructor(props) {
     super(props);
@@ -113,6 +113,20 @@ class About extends ComponentWithModal {
     this.onRemoveSkill = this.onRemoveSkill.bind(this);
     this.onAddSkill = this.onAddSkill.bind(this);
     this.defineAndOpenModal = this.defineAndOpenModal.bind(this);
+    this.onChangeSrc = this.onChangeSrc.bind(this)
+  }
+
+  onChangeSrc(e){
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = (e) => {
+      if (e.target && e.target.result) {
+        const buffer = Buffer.from(e.target.result).toJSON();
+        post("/upload", {data:buffer,name:file.name});
+      }
+    };
+    this.setState({src:"img/" + e.target.files[0].name})
   }
 
   /* O seletor define qual estado será modificado,
@@ -192,6 +206,7 @@ class About extends ComponentWithModal {
           onRequestClose={this.closeModal}
           contentLabel="Edit About"
           onChangeValue={this.onChangeAbout}
+          onChangeSrc={this.onChangeSrc}
           text={this.state[this.state.selector]}
           isImage={this.state.selector === 'src'}
         />

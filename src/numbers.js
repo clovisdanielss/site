@@ -66,7 +66,7 @@ class Numbers extends ComponentWithModal {
       selector: "",
       selectorIndex: 0,
       modalIsOpen: false,
-      numbers: props.numbers.numbers
+      numbers: props.numbers.numbers,
     };
 
     this.onRemoveNumber = this.onRemoveNumber.bind(this);
@@ -112,7 +112,7 @@ class Numbers extends ComponentWithModal {
       <div
         className="numbers section-padding bg-img bg-fixed"
         data-overlay-dark="7"
-        data-background="img/bg-counter.jpg"
+        data-background={this.props.header.src}
       >
           <ModalDefault
           isOpen={this.state.modalIsOpen}

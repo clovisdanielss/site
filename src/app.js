@@ -7,8 +7,8 @@ import Works from "./works";
 import Numbers from "./numbers";
 import Contact from "./contact";
 import Footer from "./footer";
+import HeaderEnterprise from './headerEnterprise'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { getSite } from "./loaddata";
 
 // O json do site é carregado no cabeçalho HTML
 // const jsonSite = window.site
@@ -27,12 +27,13 @@ function Site(props) {
   return (
     <div className="">
       <Loading />
-      <Navbar />
-      <Header readOnly={props.readOnly} header={jsonSite.header} />
+      <Navbar readOnly={props.readOnly} navbar={jsonSite.navbar}/>
+      <HeaderEnterprise readOnly={props.readOnly} headerEnterprise={jsonSite.headerEnterprise} />
+      {/* <Header readOnly={props.readOnly} header={jsonSite.header} /> */}
       <About readOnly={props.readOnly} about={jsonSite.about} />
       <Services readOnly={props.readOnly} services={jsonSite.services} />
       <Works readOnly={props.readOnly} works={jsonSite.works} />
-      <Numbers readOnly={props.readOnly} numbers={jsonSite.numbers} />
+      <Numbers readOnly={props.readOnly} numbers={jsonSite.numbers} header={jsonSite.header}/>
       <Contact readOnly={props.readOnly} contact={jsonSite.contact} />
       <Footer readOnly={props.readOnly} />
     </div>

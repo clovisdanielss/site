@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -54,39 +35,125 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var body_parser_1 = __importDefault(require("body-parser"));
-var cors_1 = __importDefault(require("cors"));
-var jsonSite = __importStar(require("./site.json"));
-var fs_1 = __importDefault(require("fs"));
-function rewriteJson(jsonSite) {
+exports.__esModule = true;
+var express_1 = require("express");
+var body_parser_1 = require("body-parser");
+var cors_1 = require("cors");
+var path_1 = require("path");
+/**
+ * Modificar a pasta para build aqui.
+*/
+var site_json_1 = require("./build/json/site.json");
+var fs_1 = require("fs");
+var staticFolder = './build';
+/**
+ * A persistência será realizada em um arquivo estatico pela simplicidade dos dados.
+ * Não haverá condição de corrida, pois é um projeto para um único usuário usar como edição
+ * (o dono do portifólio).
+ */
+function rewriteJson(jsonSite, isBackup) {
     return __awaiter(this, void 0, void 0, function () {
+        var filename;
         return __generator(this, function (_a) {
-            console.log(jsonSite);
-            fs_1.default.writeFile('site.json', JSON.stringify(jsonSite['default']), 'utf-8', function (err) {
+            filename = isBackup ? '/json/backup.json' : '/json/site.json';
+            filename = staticFolder + filename;
+            fs_1["default"].writeFile(filename, JSON.stringify(jsonSite), 'utf-8', function (err) {
                 if (!err) {
-                    console.log('Arquivo atualizado com sucesso!');
+                    console.log('Arquivo atualizado com sucesso!', filename);
+                }
+                else {
+                    console.log('O JSON do site foi corrompido!', err);
                 }
             });
             return [2 /*return*/];
         });
     });
 }
-var app = express_1.default();
+/**
+ * Função para criar arquivos upados para o servidor.
+ */
+function writeFile(name, b) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            fs_1["default"].writeFile(path_1["default"].join(staticFolder, 'img', name), b, function (err) {
+                if (err) {
+                    return console.error(err);
+                }
+                else {
+                    console.log('Arquivo salvo', name);
+                }
+            });
+            return [2 /*return*/];
+        });
+    });
+}
+var app = express_1["default"]();
 var port = process.env.PORT || 8080;
-app.use(cors_1.default());
-app.use(body_parser_1.default.urlencoded({ extended: true }));
-app.use(body_parser_1.default.json());
+/**
+ * Não vou lançar o backend com cors ativado.
+ */
+app.use(cors_1["default"]());
+app.use(body_parser_1["default"].urlencoded({ extended: true }));
+app.use(body_parser_1["default"].json({
+    limit: '10mb'
+}));
+/**
+ * O caminho estático deve ser redefinido no lançamento do servidor.
+ */
+app.use(express_1["default"].static(staticFolder));
 app.listen(port, function () {
     console.log("Escutando na porta " + port);
 });
-app.get('/', function (req, res, next) {
-    console.log(jsonSite);
-    jsonSite.header.name = "teste 3";
-    rewriteJson(jsonSite);
+/**
+ * Devo fazer conexão com OAUTH2.
+ */
+app.all('/:prop*', function (req, res, next) {
+    console.log(new Date(), "method:", req.method, "route:", req.route.path);
+    next();
+});
+app.get('/:route', function (req, res, next) {
+    res.sendFile(path_1["default"].join(__dirname, staticFolder, 'index.html'));
+});
+/**
+ * Rota de teste.
+ */
+app.post('/', function (req, res, next) {
+    console.log(req.body);
+    res.end();
+});
+/**
+ * Rota para upload de arquivos.
+ */
+app.post('/upload', function (req, res, next) {
+    writeFile(req.body.name, Buffer.from(req.body.data));
+    res.end();
+});
+/**
+ * Rota para adicionar elemento em um dos componentes do site.
+ */
+app.post('/:prop/:subprop', function (req, res, next) {
+    var push = req.query.push;
+    console.log("Testando var:", push, req.body);
+    var site = site_json_1["default"];
+    rewriteJson(site, true);
+    var siteProp = site[req.params.prop];
+    if (!push) {
+        siteProp[req.params.subprop] = req.body;
+    }
+    else {
+        siteProp[req.params.subprop].push(req.body);
+    }
+    rewriteJson(site);
+    res.end();
+});
+/**
+ * Rota para sobrescrita de componente do site
+ */
+app.post('/:prop', function (req, res, next) {
+    var site = site_json_1["default"];
+    rewriteJson(site, true);
+    var prop = req.params.prop;
+    site[prop] = req.body;
+    rewriteJson(site);
     res.end();
 });

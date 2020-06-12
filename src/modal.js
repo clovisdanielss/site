@@ -19,12 +19,52 @@ class ModalDefault extends Component {
         {this.props.description ? (
           <label>{this.props.description}</label>
         ) : null}
-        {this.props.isImage?
+        {this.props.isImage ? (
+          <div>
+            <label>File:</label>
+            <br/>
+            <input type="file" onChange={this.props.onChangeSrc}></input>
+          </div>
+        ) : (
+          <div>
+            <label>Text:</label>
+            <textarea
+              className="my-modal-textarea"
+              value={this.props.text}
+              onChange={this.props.onChangeValue}
+            />
+          </div>
+        )}
         <div>
-          <label>File:</label>
-          <input type="file" onChange={this.props.onChangeSrc}></input>
+          <button
+            className="my-modal-button"
+            onClick={this.props.onRequestClose}
+          >
+            Save!
+          </button>
         </div>
-        :
+      </Modal>
+    );
+  }
+}
+
+class ModalHeader extends Component {
+  render() {
+    return (
+      <Modal
+        isOpen={this.props.isOpen}
+        onRequestClose={this.props.onRequestClose}
+        contentLabel={this.props.contentLabel}
+      >
+        <div>
+          <h1>{this.props.contentLabel}</h1>
+        </div>
+        <hr />
+        {/* Campo opicional, descreve como a formatação do texto deve ser */}
+        {this.props.description ? (
+          <label>{this.props.description}</label>
+        ) : null}
+
         <div>
           <label>Text:</label>
           <textarea
@@ -32,7 +72,12 @@ class ModalDefault extends Component {
             value={this.props.text}
             onChange={this.props.onChangeValue}
           />
-        </div>}
+        </div>
+        <div>
+          <label>File:</label>
+          <br/>
+          <input type="file" onChange={this.props.onChangeSrc}></input>
+        </div>
         <div>
           <button
             className="my-modal-button"
@@ -49,13 +94,13 @@ class ModalDefault extends Component {
 class ModalSkill extends Component {
   constructor(props) {
     super(props);
-    this.onAddAndClose = this.onAddAndClose.bind(this);  }
+    this.onAddAndClose = this.onAddAndClose.bind(this);
+  }
 
   onAddAndClose() {
     this.props.onAdd();
     this.props.onRequestClose();
   }
-
 
   render() {
     if (!this.props.skill) {
@@ -160,6 +205,7 @@ class ModalWork extends Component {
         </div>
         <div>
           <label>File:</label>
+          <br/>
           <input
             className="my-modal-textarea"
             type="file"
@@ -196,7 +242,7 @@ class ModalClient extends Component {
         </div>
         <hr />
         <div>
-        <label>Title:</label>
+          <label>Title:</label>
           <input
             className="my-modal-textarea"
             value={this.props.client.title}
@@ -204,7 +250,7 @@ class ModalClient extends Component {
           />
         </div>
         <div>
-        <label>Subtitle:</label>
+          <label>Subtitle:</label>
           <input
             className="my-modal-textarea"
             value={this.props.client.subtitle}
@@ -232,4 +278,4 @@ class ModalClient extends Component {
   }
 }
 
-export { ModalDefault, ModalSkill, ModalWork, ModalClient };
+export { ModalDefault, ModalSkill, ModalWork, ModalClient, ModalHeader };

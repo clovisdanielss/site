@@ -1,6 +1,7 @@
 import React from "react";
 import ComponentWithModal from "./componentwithmodal";
-import {ModalDefault} from './modal'
+import {ModalHeader} from './modal'
+import {post} from './loaddata'
 
 const Sentences = (props) => {
   return (
@@ -24,9 +25,31 @@ class Header extends ComponentWithModal {
     super(props);
     this.state = {
       sentences: props.header.sentences,
+      src:props.header.src,
       modalIsOpen: false,
+      selector:"",
+      selectorIndex:0,
     };
     this.onChangeValue = this.onChangeValue.bind(this)
+    this.onChangeSrc = this.onChangeSrc.bind(this)
+  }
+
+  closeModal() {
+    ComponentWithModal.prototype.closeModal.apply(this, [this.state]);
+    window.location.reload()
+  }
+
+  onChangeSrc(e){
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = (e) => {
+      if (e.target && e.target.result) {
+        const buffer = Buffer.from(e.target.result).toJSON();
+        post("/upload", {data:buffer,name:file.name});
+      }
+    };
+    this.setState({src:"img/" + e.target.files[0].name})
   }
 
   onChangeValue(e){
@@ -47,18 +70,19 @@ class Header extends ComponentWithModal {
   render() {
     return (
       <header className="header slider-fade" data-scroll-index="0">
-        <ModalDefault
+        <ModalHeader
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Header"
           description="Use '>' para separar os elementos."
           onChangeValue={this.onChangeValue}
+          onChangeSrc={this.onChangeSrc}
           text={this.state.sentences.join('>')}
         />
         <div
           className="text-center item bg-img"
           data-overlay-dark="8"
-          data-background="img/bg2.jpg"
+          data-background={this.state.src}
         >
           <div className={this.classNameHighlight("v-middle caption mt-30")} onClick={this.openModal}>
             <div className="o-hidden">

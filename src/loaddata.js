@@ -9,7 +9,7 @@ function getSite(site) {
 }
 
 function post(route, data) {
-    let url = process.env.REACT_APP_API + route
+    let url = process.env.REACT_APP_API ? process.env.REACT_APP_API + route: route
     axios.post(url,data).then((response)=>{
         console.log("Sucesso!",route)
     }).catch((err)=>{
