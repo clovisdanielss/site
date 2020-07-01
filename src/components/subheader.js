@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import ComponentWithModal from './componentwithmodal'
-import { ModalDefault } from "./modal";
+import ComponentWithModal from '../componentwithmodal'
+import { ModalDefault } from "../modal";
 
 
 class SubHeader extends ComponentWithModal {

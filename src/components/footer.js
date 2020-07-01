@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import ComponentWithModal from './componentwithmodal'
+import ComponentWithModal from '../componentwithmodal'
 
 class Footer extends ComponentWithModal{
 

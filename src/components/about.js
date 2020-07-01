@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { ModalDefault, ModalSkill } from "./modal";
-import ComponentWithModal from "./componentwithmodal";
-import {post} from './loaddata'
+import { ModalDefault, ModalSkill } from "../modal";
+import ComponentWithModal from "../componentwithmodal";
+import {post} from '../loaddata'
 class Skill extends Component {
   constructor(props) {
     super(props);

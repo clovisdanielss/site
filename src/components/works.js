@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { ModalDefault, ModalWork } from "./modal";
-import ComponentWithModal from "./componentwithmodal";
+import { ModalDefault, ModalWork } from "../modal";
+import ComponentWithModal from "../componentwithmodal";
 import SubHeader from "./subheader";
-import { post } from "./loaddata";
+import { post } from "../loaddata";
 class Work extends ComponentWithModal {
   //Adiciona novo elemento, ao invés de substituir todos.
   route = "/works/works";

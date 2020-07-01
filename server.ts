@@ -5,14 +5,14 @@ import path from 'path'
 /**
  * Modificar a pasta para build aqui.
 */
-import jsonSite from './build/json/site.json'
+import jsonSite from './public/json/site.json'
 import fs from 'fs'
 
 interface ISite {
     [index: string]: any
 }
 
-var staticFolder = './build'
+var staticFolder = './public'
 
 /**
  * A persistência será realizada em um arquivo estatico pela simplicidade dos dados.

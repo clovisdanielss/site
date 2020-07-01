@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ComponentWithModal from "./componentwithmodal";
-import { ModalClient } from "./modal";
+import ComponentWithModal from "../componentwithmodal";
+import { ModalClient } from "../modal";
 import SubHeader from "./subheader";
 
 class Client extends ComponentWithModal {

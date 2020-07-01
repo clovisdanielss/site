@@ -1,13 +1,13 @@
 import React,{Component} from "react";
-import Navbar from "./navbar";
-import Header from "./header";
-import About from "./about";
-import Services from "./services";
-import Works from "./works";
-import Numbers from "./numbers";
-import Contact from "./contact";
-import Footer from "./footer";
-import HeaderEnterprise from './headerEnterprise'
+import Navbar from "./components/navbar";
+import Header from "./components/header";
+import About from "./components/about";
+import Services from "./components/services";
+import Works from "./components/works";
+import Numbers from "./components/numbers";
+import Contact from "./components/contact";
+import Footer from "./components/footer";
+import HeaderEnterprise from './components/headerEnterprise'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // O json do site é carregado no cabeçalho HTML

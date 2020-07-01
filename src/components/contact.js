@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ComponentWithModal from "./componentwithmodal";
-import SubHeader from './subheader'
+import ComponentWithModal from "../componentwithmodal";
+import SubHeader from "./subheader";
 
 class Contact extends ComponentWithModal {
   constructor(props) {
@@ -13,17 +13,17 @@ class Contact extends ComponentWithModal {
       subtitle: props.contact.subtitle,
     };
 
-    this.onSubmit = this.onSubmit.bind(this)
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onSubmit(e){
-      e.preventDefault()
-      console.log("Enviando email!!!")
+  onSubmit(e) {
+    e.preventDefault();
+    console.log("Enviando email!!!");
   }
 
-  componentDidMount(){
-      let form = document.getElementById("contact-form")
-      form.addEventListener("submit",this.onSubmit,true)
+  componentDidMount() {
+    let form = document.getElementById("contact-form");
+    form.addEventListener("submit", this.onSubmit, true);
   }
 
   render() {
