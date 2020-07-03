@@ -46,10 +46,10 @@ class Header extends ComponentWithModal {
     reader.onload = (e) => {
       if (e.target && e.target.result) {
         const buffer = Buffer.from(e.target.result).toJSON();
-        post("/upload", {data:buffer,name:file.name});
+        post("/upload", {data:buffer,name:file.name.replaceAll(" ","_")});
       }
     };
-    this.setState({src:"img/" + e.target.files[0].name})
+    this.setState({src:process.env.REACT_APP_STATIC + "img/" + e.target.files[0].name.replaceAll(" ","_")})
   }
 
   onChangeValue(e){

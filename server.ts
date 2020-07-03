@@ -2,11 +2,21 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import path from 'path'
+import dotenv from 'dotenv'
+import AWS from 'aws-sdk'
+const gmail = require('gmail-send')
+
+dotenv.config()
+
+AWS.config.update({
+    region: 'sa-east-1'
+})
 /**
  * Modificar a pasta para build aqui.
 */
 import jsonSite from './public/json/site.json'
 import fs from 'fs'
+
 
 interface ISite {
     [index: string]: any
@@ -36,13 +46,26 @@ async function rewriteJson(jsonSite: any, isBackup?: boolean) {
  * Função para criar arquivos upados para o servidor.
  */
 async function writeFile(name: string, b: Buffer) {
-    fs.writeFile(path.join(staticFolder, 'img', name), b, (err) => {
-        if (err) {
-            return console.error(err)
-        } else {
-            console.log('Arquivo salvo', name)
+    const s3 = new AWS.S3()
+    let bucketParams = {
+        Bucket: "bucket-meta",
+        ACL: "public-read",
+        Body: b,
+        Key: "img/" + name
+    }
+    s3.upload(bucketParams, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
+        console.log(err, data)
+        if (!err) {
+            console.log("Arquivo salvo!!")
         }
     })
+    // fs.writeFile(path.join(staticFolder, 'img', name), b, (err) => {
+    //     if (err) {
+    //         return console.error(err)
+    //     } else {
+    //         console.log('Arquivo salvo', name)
+    //     }
+    // })
 }
 
 const app = express()
@@ -76,8 +99,8 @@ app.all('/:prop*', (req, res, next) => {
     next()
 })
 
-app.get('/:route', (req,res,next)=>{
-    res.sendFile(path.join(__dirname, staticFolder,'index.html'))
+app.get('/:route', (req, res, next) => {
+    res.sendFile(path.join(__dirname, staticFolder, 'index.html'))
 })
 
 /**
@@ -94,6 +117,22 @@ app.post('/', (req, res, next) => {
 app.post('/upload', (req, res, next) => {
     writeFile(req.body.name, Buffer.from(req.body.data))
     res.end()
+})
+
+app.post('/sendmail', (req, res, next)=>{
+    let send = gmail({
+        user:process.env.MAIL,
+        pass:process.env.MAIL_PASS,
+        to:"clovisdanielss@gmail.com",
+        subject:req.body.subject,
+    })
+    send({
+        text:`Nome: ${req.body.name}\n` + req.body.text + `\nEnviado de ${req.body.mail}`
+        /// @ts-ignore
+    }, (err,result,fullResult)=>{
+        console.log(result)
+        res.end()
+    })
 })
 
 /** 

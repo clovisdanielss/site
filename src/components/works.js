@@ -27,13 +27,13 @@ class Work extends ComponentWithModal {
     reader.onload = (e) => {
       if (e.target && e.target.result) {
         const buffer = Buffer.from(e.target.result).toJSON();
-        post("/upload", {data:buffer,name:file.name});
+        post("/upload", {data:buffer,name:file.name.replaceAll(" ","_")});
       }
     };
     this.props.onChangeWork(
       this.props.index,
       "src",
-      "img/" + e.target.files[0].name
+      process.env.REACT_APP_STATIC + "img/" + e.target.files[0].name.replaceAll(" ","_")
     );
   }
   onChangeFilter(e) {
@@ -232,6 +232,7 @@ class Works extends ComponentWithModal {
         <div className="container-fluid">
           <div className="row">
             <SubHeader
+              closeModal={this.closeModal}
               text={this.state[this.state.selector]}
               title={this.state.title}
               subtitle={this.state.subtitle}

@@ -20,7 +20,7 @@ class SubHeader extends ComponentWithModal {
         <div className="section-head text-center col-sm-12">
           <ModalDefault
             isOpen={this.state.modalIsOpen}
-            onRequestClose={this.closeModal}
+            onRequestClose={(e)=>{this.closeModal(e); this.props.closeModal(e)}}
             contentLabel="Edit SubHeader"
             onChangeValue={this.props.onChangeSubHeader}
             text={

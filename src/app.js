@@ -10,10 +10,7 @@ import Footer from "./components/footer";
 import HeaderEnterprise from './components/headerEnterprise'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-// O json do site é carregado no cabeçalho HTML
-// const jsonSite = window.site
 let jsonSite = window.site 
-// getSite(jsonSite);
 
 function Loading() {
   return (
@@ -33,7 +30,7 @@ function Site(props) {
       <About readOnly={props.readOnly} about={jsonSite.about} />
       <Services readOnly={props.readOnly} services={jsonSite.services} />
       <Works readOnly={props.readOnly} works={jsonSite.works} />
-      <Numbers readOnly={props.readOnly} numbers={jsonSite.numbers} header={jsonSite.header}/>
+      <Numbers readOnly={props.readOnly} numbers={jsonSite.numbers} header={jsonSite.headerEnterprise}/>
       <Contact readOnly={props.readOnly} contact={jsonSite.contact} />
       <Footer readOnly={props.readOnly} />
     </div>

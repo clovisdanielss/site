@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import ComponentWithModal from "../componentwithmodal";
 import SubHeader from "./subheader";
+import { post } from "../loaddata";
 
 class Contact extends ComponentWithModal {
+  route = "/contact";
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +20,17 @@ class Contact extends ComponentWithModal {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log("Enviando email!!!");
+    if (this.props.readOnly) {
+      post("/sendmail", {
+        name: document.getElementById("form_name").value,
+        mail: document.getElementById("form_email").value,
+        subject: document.getElementById("form_subject").value,
+        text: document.getElementById("form_message").value,
+      });
+      window.location.reload();
+    }else{
+      alert("Modo edição não envia mensagens!")
+    }
   }
 
   componentDidMount() {
@@ -35,6 +47,7 @@ class Contact extends ComponentWithModal {
         <div className="container">
           <div className="row">
             <SubHeader
+              closeModal={this.closeModal}
               text={this.state[this.state.selector]}
               title={this.state.title}
               subtitle={this.state.subtitle}
@@ -49,7 +62,7 @@ class Contact extends ComponentWithModal {
                 className="form"
                 id="contact-form"
                 method="post"
-                action="contact.php"
+                action="/sendmail"
               >
                 <div className="messages"></div>
 
@@ -61,9 +74,9 @@ class Contact extends ComponentWithModal {
                           id="form_name"
                           type="text"
                           name="name"
-                          placeholder="Name *"
+                          placeholder="Nome *"
                           required={true}
-                          data-error="Firstname is required."
+                          data-error="Preencha seu nome."
                         />
                         <div className="help-block with-errors"></div>
                       </div>
@@ -76,7 +89,7 @@ class Contact extends ComponentWithModal {
                           name="email"
                           placeholder="Email *"
                           required={true}
-                          data-error="Valid email is required."
+                          data-error="Coloque seu email."
                         />
                         <div className="help-block with-errors"></div>
                       </div>
@@ -87,7 +100,7 @@ class Contact extends ComponentWithModal {
                           id="form_subject"
                           type="text"
                           name="subject"
-                          placeholder="Subject"
+                          placeholder="Assunto"
                         />
                       </div>
                     </div>
@@ -96,10 +109,10 @@ class Contact extends ComponentWithModal {
                         <textarea
                           id="form_message"
                           name="message"
-                          placeholder="Your Message *"
+                          placeholder="Mensagem *"
                           rows={4}
                           required={true}
-                          data-error="Your message is required."
+                          data-error="Escreva sua mensagem."
                         ></textarea>
                         <div className="help-block with-errors"></div>
                       </div>
@@ -107,7 +120,7 @@ class Contact extends ComponentWithModal {
 
                     <div className="col-md-12 text-center">
                       <button type="submit" className="butn butn-bg">
-                        <span>Send Message</span>
+                        <span>Enviar</span>
                       </button>
                     </div>
                   </div>

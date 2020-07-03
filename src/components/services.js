@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import ComponentWithModal from "../componentwithmodal";
-import SubHeader from './subheader'
+import SubHeader from "./subheader";
 import { ModalDefault } from "../modal";
 import { render } from "react-dom";
-
 
 class Service extends Component {
   constructor(props) {
@@ -12,7 +11,7 @@ class Service extends Component {
     this.onRemoveService = this.onRemoveService.bind(this);
   }
 
-  /** 
+  /**
    * Define um seletor para atualizar alguma propriedade do
    * Serviço em questão, depois abre o modal.
    */
@@ -52,17 +51,17 @@ class Service extends Component {
         <div className={bkg}>
           {removeTrigger}
           <div className={props.classNameHighlight()}>
-          <span
-            className="icon"
-            onClick={this.defineAndOpenModal}
-            data-state={"icon"}
-          >
-            <i
+            <span
+              className="icon"
               onClick={this.defineAndOpenModal}
               data-state={"icon"}
-              className={props.service.icon}
-            ></i>
-          </span>
+            >
+              <i
+                onClick={this.defineAndOpenModal}
+                data-state={"icon"}
+                className={props.service.icon}
+              ></i>
+            </span>
           </div>
           <h6
             data-state={"name"}
@@ -85,7 +84,7 @@ class Service extends Component {
 }
 
 class Services extends ComponentWithModal {
-  route = '/services'
+  route = "/services";
   constructor(props) {
     super(props);
     this.state = {
@@ -98,7 +97,7 @@ class Services extends ComponentWithModal {
       selectorIndex: 0,
       title: props.services.title,
       subtitle: props.services.subtitle,
-      services: props.services.services
+      services: props.services.services,
     };
 
     this.onAddService = this.onAddService.bind(this);
@@ -106,8 +105,8 @@ class Services extends ComponentWithModal {
     this.onChangeService = this.onChangeService.bind(this);
   }
 
-  /** 
-   * Modifica valor de um serviço de determinado indice para um 
+  /**
+   * Modifica valor de um serviço de determinado indice para um
    * dado seletor.
    */
   onChangeService(e) {
@@ -130,15 +129,15 @@ class Services extends ComponentWithModal {
     this.setState({ services: services });
   }
 
-  /** 
+  /**
    * Remove um serviço para um dado índice.
    */
   onRemoveService(index) {
-    this.state.services.splice(index, 1)
+    this.state.services.splice(index, 1);
     let services = this.state.services;
     this.setState({ services: services, selector: "", selectorIndex: 0 });
     setTimeout(() => {
-      this.closeModal(this.state)
+      this.closeModal(this.state);
     }, 500);
   }
 
@@ -161,6 +160,7 @@ class Services extends ComponentWithModal {
         <div className="container-fluid">
           <div className="row">
             <SubHeader
+              closeModal={this.closeModal}
               text={this.state[this.state.selector]}
               title={this.state.title}
               subtitle={this.state.subtitle}

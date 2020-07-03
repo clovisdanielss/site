@@ -47,8 +47,6 @@ class ComponentWithModal extends Component {
     /*
         Aqui ocorrerá a persistência.
       */
-
-    console.log("Should work!", this.state);
     let toSubmit = {};
     if (e.target) {
       e = this.state;

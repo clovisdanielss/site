@@ -113,14 +113,14 @@ class Clients extends ComponentWithModal {
     this.addAnimationOnReadOnly = this.addAnimationOnReadOnly.bind(this);
   }
 
-  /** 
+  /**
    * Adiciona a animação do modo de leitura
    */
   addAnimationOnReadOnly(className) {
     return this.props.readOnly ? className + " owl-carousel" : className;
   }
 
-  /** 
+  /**
    * Modifica os dados de um comentário de cliente
    */
   onChangeClient(index, selector, value) {
@@ -142,7 +142,7 @@ class Clients extends ComponentWithModal {
     this.setState({ clients: clients });
   }
 
-  /** 
+  /**
    * Remove um comentário de cliente da lista de exibição.
    */
   onRemoveClient(index) {
@@ -160,6 +160,7 @@ class Clients extends ComponentWithModal {
         <div className="container">
           <div className="row">
             <SubHeader
+              closeModal={this.closeModal}
               text={this.state[this.state.selector]}
               title={this.state.title}
               subtitle={this.state.subtitle}
