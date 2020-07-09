@@ -3,6 +3,7 @@ import ComponentWithModal from '../componentwithmodal'
 
 class Footer extends ComponentWithModal{
 
+    
 
     render(){
         return <footer className="text-center one-footer">

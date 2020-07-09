@@ -9,6 +9,7 @@ const Sentences = (props) => {
       className="text-center item bg-img"
       data-overlay-dark="8"
       data-background={props.src}
+      //style={{ backgroundImage: props.src }}
     >
       <div className="v-middle caption mt-30">
         <div className="o-hidden">
@@ -19,9 +20,6 @@ const Sentences = (props) => {
               return <p key={index}>{sentence}</p>;
             }
           })}
-          <a href="#0" className="butn butn-bg mt-30">
-            <span>Get Started</span>
-          </a>
         </div>
       </div>
     </div>
@@ -59,16 +57,21 @@ class HeaderEnterprise extends ComponentWithModal {
     reader.onload = (e) => {
       if (e.target && e.target.result) {
         const buffer = Buffer.from(e.target.result).toJSON();
-        post("/upload", { data: buffer, name: file.name.replaceAll(" ","_") });
+        post("/upload", { data: buffer, name: file.name.replaceAll(" ", "_") });
       }
     };
-    this.setState({ src: process.env.REACT_APP_STATIC + "img/" + e.target.files[0].name.replaceAll(" ","_")});
+    this.setState({
+      src:
+        process.env.REACT_APP_STATIC +
+        "img/" +
+        e.target.files[0].name.replaceAll(" ", "_"),
+    });
   }
 
   onChangeValue(e) {
     let string = e.target.value;
     let arrayOfStrings = string.split("#\n");
-    let arrayOfSentences = []
+    let arrayOfSentences = [];
     arrayOfStrings.map((valStr) => {
       arrayOfSentences.push(valStr.split(">\n"));
     });
@@ -85,9 +88,14 @@ class HeaderEnterprise extends ComponentWithModal {
     }
   }
 
+  componentDidMount() {
+    window.owlCarousel();
+    window.config();
+  }
+
   doubleArrayToText() {
     let text = "";
-    console.log(this.state.arrayOfSentences)
+    console.log(this.state.arrayOfSentences);
     this.state.arrayOfSentences.map((sentences, index, arrayOfSentences) => {
       text += sentences.join(">\n");
       if (index + 1 !== arrayOfSentences.length) {

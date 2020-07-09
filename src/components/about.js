@@ -253,8 +253,8 @@ class About extends ComponentWithModal {
                   index={this.state.selectorIndex}
                   setSelectors={this.setSelectors}
                 />
-                <a href="#0" className="butn butn-bg ml-0">
-                  <span>Contact Me</span>
+                <a href="#contact-section" className="butn butn-bg ml-0">
+                  <span>Entre com contato</span>
                 </a>
               </div>
             </div>

@@ -21,15 +21,20 @@ class Contact extends ComponentWithModal {
   onSubmit(e) {
     e.preventDefault();
     if (this.props.readOnly) {
-      post("/sendmail", {
-        name: document.getElementById("form_name").value,
-        mail: document.getElementById("form_email").value,
-        subject: document.getElementById("form_subject").value,
-        text: document.getElementById("form_message").value,
-      });
-      window.location.reload();
-    }else{
-      alert("Modo edição não envia mensagens!")
+      post(
+        "/sendmail",
+        {
+          name: document.getElementById("form_name").value,
+          mail: document.getElementById("form_email").value,
+          subject: document.getElementById("form_subject").value,
+          text: document.getElementById("form_message").value,
+        },
+        () => {
+          window.location.reload();
+        }
+      );
+    } else {
+      alert("Modo edição não envia mensagens!");
     }
   }
 
@@ -41,8 +46,9 @@ class Contact extends ComponentWithModal {
   render() {
     return (
       <section
+        id="contact-section"
         className="page-contact section-padding bg-dark"
-        data-scroll-index="6"
+        data-scroll-index="4"
       >
         <div className="container">
           <div className="row">

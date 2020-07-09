@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React, { Component } from "react";
 import Navbar from "./components/navbar";
 import Header from "./components/header";
 import About from "./components/about";
@@ -7,44 +7,89 @@ import Works from "./components/works";
 import Numbers from "./components/numbers";
 import Contact from "./components/contact";
 import Footer from "./components/footer";
-import HeaderEnterprise from './components/headerEnterprise'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import HeaderEnterprise from "./components/headerEnterprise";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import Login from "./components/login";
+import UpdateAccount from "./components/updateAccount";
+import { GlobalStateContext } from "./contexts";
 
-let jsonSite = window.site 
+let jsonSite = window.site;
 
-function Loading() {
+const Loading = () => {
   return (
     <div className="loading">
       <div className="load-circle"></div>
     </div>
   );
-}
+};
 
-function Site(props) {
+const Site = (props) => {
   return (
     <div className="">
-      <Loading />
-      <Navbar readOnly={props.readOnly} navbar={jsonSite.navbar}/>
-      <HeaderEnterprise readOnly={props.readOnly} headerEnterprise={jsonSite.headerEnterprise} />
+      {/* <Loading /> */}
+      <Navbar readOnly={props.readOnly} navbar={jsonSite.navbar} />
+      <HeaderEnterprise
+        readOnly={props.readOnly}
+        headerEnterprise={jsonSite.headerEnterprise}
+      />
       {/* <Header readOnly={props.readOnly} header={jsonSite.header} /> */}
       <About readOnly={props.readOnly} about={jsonSite.about} />
       <Services readOnly={props.readOnly} services={jsonSite.services} />
       <Works readOnly={props.readOnly} works={jsonSite.works} />
-      <Numbers readOnly={props.readOnly} numbers={jsonSite.numbers} header={jsonSite.headerEnterprise}/>
+      <Numbers
+        readOnly={props.readOnly}
+        numbers={jsonSite.numbers}
+        header={jsonSite.headerEnterprise}
+      />
       <Contact readOnly={props.readOnly} contact={jsonSite.contact} />
       <Footer readOnly={props.readOnly} />
     </div>
   );
-}
+};
+
+const PrivateRoute = ({ children, ...rest }) => {
+  const context = React.useContext(GlobalStateContext);
+  console.log(context);
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        context.isAuthenticated ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          ></Redirect>
+        )
+      }
+    ></Route>
+  );
+};
 
 class App extends Component {
+  static contextType = GlobalStateContext;
+
   render() {
     return (
       <Router>
         <Switch>
-          <Route path="/edit">
-            <Site />
+          <PrivateRoute path="/update">
+            <UpdateAccount></UpdateAccount>
+          </PrivateRoute>
+          <Route path="/login">
+            <Login></Login>
           </Route>
+          <PrivateRoute path="/edit">
+            <Site />
+          </PrivateRoute>
           <Route path="/">
             <Site readOnly={true} />
           </Route>

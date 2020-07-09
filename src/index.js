@@ -1,13 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './app';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./app";
+import * as serviceWorker from "./serviceWorker";
+import { GlobalStateContext, UpdateGlobalStateContext, globalState } from "./contexts";
+
+const GlobalStateProvider = ({ children }) => {
+  const [state, setState] = React.useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    globalState
+  );
+  return (
+    <GlobalStateContext.Provider value={state}>
+      <UpdateGlobalStateContext.Provider value={setState}>
+        {children}
+      </UpdateGlobalStateContext.Provider>
+    </GlobalStateContext.Provider>
+  );
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GlobalStateProvider>
+      <App />
+    </GlobalStateProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

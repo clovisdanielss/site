@@ -27,13 +27,15 @@ class Work extends ComponentWithModal {
     reader.onload = (e) => {
       if (e.target && e.target.result) {
         const buffer = Buffer.from(e.target.result).toJSON();
-        post("/upload", {data:buffer,name:file.name.replaceAll(" ","_")});
+        post("/upload", { data: buffer, name: file.name.replaceAll(" ", "_") });
       }
     };
     this.props.onChangeWork(
       this.props.index,
       "src",
-      process.env.REACT_APP_STATIC + "img/" + e.target.files[0].name.replaceAll(" ","_")
+      process.env.REACT_APP_STATIC +
+        "img/" +
+        e.target.files[0].name.replaceAll(" ", "_")
     );
   }
   onChangeFilter(e) {
@@ -47,7 +49,7 @@ class Work extends ComponentWithModal {
   }
   closeModal() {
     ComponentWithModal.prototype.closeModal.apply(this, [this.props.works]);
-    window.location.reload()
+    window.location.reload();
   }
 
   defineAndOpenModal(e) {
@@ -70,7 +72,9 @@ class Work extends ComponentWithModal {
     return (
       <div
         onClick={this.props.onAddWork}
-        className={this.classNameHighlight("col-lg-4 col-md-6 items no-padding " + work.filter)}
+        className={this.classNameHighlight(
+          "col-lg-4 col-md-6 items no-padding " + work.filter
+        )}
       >
         <ModalWork
           onChangeSubtitle={this.onChangeSubtitle}
@@ -210,7 +214,12 @@ class Works extends ComponentWithModal {
   componentDidUpdate() {
     if (!this.props.readOnly) {
       window.$gallery.isotope("destroy").isotope();
+      
     }
+  }
+
+  componentDidMount() {
+    window.isotope();
   }
 
   render() {

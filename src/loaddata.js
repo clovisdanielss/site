@@ -8,7 +8,7 @@ function getSite(app) {
   });
 }
 
-function post(route, data) {
+function post(route, data, cbSuccess,cbError) {
   let url = process.env.REACT_APP_API
     ? process.env.REACT_APP_API + route
     : route;
@@ -16,9 +16,15 @@ function post(route, data) {
     .post(url, data)
     .then((response) => {
       console.log("Sucesso!", route);
+      if(cbSuccess){
+        cbSuccess()
+      }
     })
     .catch((err) => {
       console.error("Erro!", route, url);
+      if(cbError){
+        cbError()
+      }
     });
 }
 
