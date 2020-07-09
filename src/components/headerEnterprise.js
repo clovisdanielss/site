@@ -1,6 +1,6 @@
 import React from "react";
 import ComponentWithModal from "../componentwithmodal";
-import { ModalHeader } from "../modal";
+import  ModalHeader  from "../modals/modalHeader";
 import { post } from "../loaddata";
 
 const Sentences = (props) => {

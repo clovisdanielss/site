@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ModalDefault, ModalSkill } from "../modal";
+import ModalSkill from "../modals/modalSkill";
+import ModalDefault from '../modals/modalDefault'
 import ComponentWithModal from "../componentwithmodal";
 import {post} from '../loaddata'
 class Skill extends Component {

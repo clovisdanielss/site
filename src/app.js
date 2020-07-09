@@ -17,6 +17,8 @@ import {
 import Login from "./components/login";
 import UpdateAccount from "./components/updateAccount";
 import { GlobalStateContext } from "./contexts";
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 
 let jsonSite = window.site;
 

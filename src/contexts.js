@@ -1,6 +1,6 @@
 import React from 'react'
 const globalState = {
-  isAuthenticated: false
+  isAuthenticated: true
 }
 
 const GlobalStateContext = React.createContext(globalState)

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import ComponentWithModal from "../componentwithmodal";
-import { ModalDefault } from "../modal";
-
+import ModalDefault from '../modals/modalDefault'
 class Number extends Component {
   constructor(props) {
     super(props);

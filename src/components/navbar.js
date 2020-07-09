@@ -1,6 +1,6 @@
 import React from "react";
 import ComponentWithModal from "../componentwithmodal";
-import { ModalDefault } from "../modal";
+import ModalDefault from '../modals/modalDefault'
 import { post } from "../loaddata";
 
 class Navbar extends ComponentWithModal {

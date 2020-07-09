@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ComponentWithModal from "../componentwithmodal";
 import SubHeader from "./subheader";
-import { ModalDefault } from "../modal";
+import ModalDefault from '../modals/modalDefault'
 import { render } from "react-dom";
 
 class Service extends Component {

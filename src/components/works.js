@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { ModalDefault, ModalWork } from "../modal";
+import ModalWork  from "../modals/modalWork";
+import ModalDefault from '../modals/modalDefault'
 import ComponentWithModal from "../componentwithmodal";
 import SubHeader from "./subheader";
 import { post } from "../loaddata";
