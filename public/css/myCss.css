@@ -9,98 +9,136 @@ h4:hover,
 h5:hover,
 h6:hover{
     background-color: rgba(200,200,200, .3)
-} */ 
+} */
 
-.margin-left-10px{
-    margin-left: 10px;
-}
-.highlight:hover{
-    background-color:  rgba(189, 180, 180, 0.3);
+.margin-left-10px {
+  margin-left: 10px;
 }
 
-.my-menu{
-    display: inline-block;
-    z-index: 3;
+.highlight{
+  border-radius: 20px;
+}
+
+.skills>.highlight{
+  padding: 5px 2px 5px 5px;
+}
+.skills>div>div>h6{
+  margin-bottom: 5px;
+}
+.skills>.highlight>.item{
+  margin: 5px;
+}
+
+.highlight:hover {
+  background-color: rgba(189, 180, 180, 0.3);
+}
+
+.my-menu {
+  display: inline-block;
+  z-index: 3;
 }
 
 /* Tive que forçar o nome que o react da pra classe */
-.ReactModalPortal{
-    position: relative;
-    z-index: 1000;
+.ReactModalPortal {
+  position: relative;
+  z-index: 1000;
 }
-.ReactModalPortal>div>div{
-    width: 50%;
-    margin: auto;
-    inset:20px 0px !important;
+.ReactModalPortal > div > div {
+  width: 50%;
+  margin: auto;
+  inset: 20px 0px !important;
 }
-@media(max-width: 800px){
-    .ReactModalPortal>div>div{
-        width: 300px;
-    }
-}
-
-.my-modal-textarea,
-.my-modal-button{
-    width: 100%;
-}
-.my-modal-button{
-    margin-top: 20px;
-}
-.my-serv-item{
-    height: 100%;
+@media (max-width: 800px) {
+  .ReactModalPortal > div > div {
+    width: 300px;
+  }
 }
 
-.my-icon{
-    position: absolute;
-    right: 10px;
-    top:10px;
-    font-size: 80%!important;
-    width:  20px!important;
-    height: 20px!important;
-    margin-bottom: 0px!important;
-    z-index: 1;
+
+.my-modal-button {
+  width: 100%;
+}
+.my-modal-button {
+  margin-top: 20px;
+}
+.my-serv-item {
+  height: 100%;
 }
 
-.my-icon-about{
-    position: relative;
-    float: right;
-    left: 20px;
-    font-size: 80%!important;
-    width:  20px!important;
-    height: 20px!important;
-    margin-bottom: 0px!important;
-    z-index: 1;
-}
-.my-icon-about>i,
-.my-icon>i{
-    position: absolute;
-    right: 5px;
-    top:4px;
-    color:red;
+.my-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 80% !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin-bottom: 0px !important;
+  z-index: 1;
 }
 
-.icon-red{
-    color:red;
+.my-icon-about {
+  position: relative;
+  float: right;
+  left: 20px;
+  font-size: 80% !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin-bottom: 0px !important;
+  z-index: 1;
+}
+.my-icon-about > i,
+.my-icon > i {
+  position: absolute;
+  right: 5px;
+  top: 4px;
+  color: red;
 }
 
-.my-gallery{
-    position: flex;
-}
-.my-add-work>div>div{
-    opacity: 1 !important;
-    transform: unset!important;
+.icon-red {
+  color: red;
 }
 
-.my-note{
-    text-align: center !important;
+.my-gallery {
+  position: flex;
 }
-.myzi1{
-    z-index: 1;
-}
-.my-row{
-    justify-content: center;
+.my-add-work > div > div {
+  opacity: 1 !important;
+  transform: unset !important;
 }
 
-textarea{
-    min-height: 400px !important;
+.my-note {
+  text-align: center !important;
+}
+.myzi1 {
+  z-index: 1;
+}
+.my-row {
+  justify-content: center;
+}
+
+.my-modal-textarea {
+  min-height: 400px !important;
+}
+
+.icon-config {
+  position: fixed !important;
+  right: 30px !important;
+  bottom: 20px !important;
+  z-index: 1000 !important;
+  background-color: rgba(28, 28, 28, .0);
+  transition: 1s background-color;
+  height: 70px;
+  width: 70px;
+  border-radius: 60px;
+}
+
+.icon-config:hover{
+  background-color: rgba(28,28,28, 1);
+}
+
+.fa-cogs.my-icon{
+    color: #eb2f5b !important;
+    font-size: 40px !important;
+    right: 40px;
+    top:15px !important;
 }

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import Modal from "react-modal";
 
-
-class ModalDefault extends Component {
+class ModalNavbar extends Component {
   render() {
     return (
       <Modal
@@ -20,9 +19,16 @@ class ModalDefault extends Component {
         ) : null}
         {this.props.isImage ? (
           <div>
-            <label>File:</label>
-            <br/>
-            <input type="file" onChange={this.props.onChangeSrc}></input>
+            <div>
+              <label>Arquivo Imagem Clara:</label>
+              <br />
+              <input type="file" onChange={this.props.onChangeSrc}></input>
+            </div>
+            <div>
+              <label>Arquivo Imagem Escura:</label>
+              <br />
+              <input type="file" onChange={this.props.onChangeSrcAlt}></input>
+            </div>
           </div>
         ) : (
           <div>
@@ -35,7 +41,7 @@ class ModalDefault extends Component {
           </div>
         )}
         <div>
-        <button
+          <button
             className="butn butn-bg ml-0 btn-block"
             onClick={this.props.onRequestClose}
           >
@@ -47,4 +53,4 @@ class ModalDefault extends Component {
   }
 }
 
-export default ModalDefault
+export default ModalNavbar;

@@ -1,6 +1,7 @@
 import React from "react";
 import ComponentWithModal from "../componentwithmodal";
-import  ModalHeader  from "../modals/modalHeader";
+import ModalHeader from "../modals/modalHeader";
+import ModalHeaderEnterprise from "../modals/modalHeaderEnterprise";
 import { post } from "../loaddata";
 
 const Sentences = (props) => {
@@ -40,16 +41,12 @@ class HeaderEnterprise extends ComponentWithModal {
       selector: "",
       selectorIndex: 0,
     };
-    this.onChangeValue = this.onChangeValue.bind(this);
+    this.setMyState = this.setMyState.bind(this);
     this.onChangeSrc = this.onChangeSrc.bind(this);
     this.doubleArrayToText = this.doubleArrayToText.bind(this);
   }
 
-  closeModal() {
-    ComponentWithModal.prototype.closeModal.apply(this, [this.state]);
-    window.location.reload();
-  }
-
+  
   onChangeSrc(e) {
     let file = e.target.files[0];
     let reader = new FileReader();
@@ -68,14 +65,8 @@ class HeaderEnterprise extends ComponentWithModal {
     });
   }
 
-  onChangeValue(e) {
-    let string = e.target.value;
-    let arrayOfStrings = string.split("#\n");
-    let arrayOfSentences = [];
-    arrayOfStrings.map((valStr) => {
-      arrayOfSentences.push(valStr.split(">\n"));
-    });
-    this.setState({ arrayOfSentences: arrayOfSentences });
+  setMyState(arrayOfSentences) {
+    this.setState({ arrayOfSentences });
   }
 
   componentDidUpdate(props, state) {
@@ -108,14 +99,15 @@ class HeaderEnterprise extends ComponentWithModal {
   render() {
     return (
       <header className="header slider-fade" data-scroll-index="0">
-        <ModalHeader
+        <ModalHeaderEnterprise
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Header"
           description="Use '>' para separar os elementos. Use # para separar telas."
-          onChangeValue={this.onChangeValue}
+          setParentState={this.setMyState}
           onChangeSrc={this.onChangeSrc}
           text={this.doubleArrayToText()}
+          arrayOfSentences={this.state.arrayOfSentences}
         />
         <div
           className={this.classNameHighlight("owl-carousel owl-theme")}

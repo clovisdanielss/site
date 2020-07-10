@@ -36,9 +36,10 @@
     "typescript": "^3.9.3"
   },
   "scripts": {
-    "start": "REACT_APP_STATIC=https://bucket-meta.s3-sa-east-1.amazonaws.com/ REACT_APP_API=http://localhost:8080 react-scripts start",
+    "react":"REACT_APP_STATIC=https://bucket-meta.s3-sa-east-1.amazonaws.com/ REACT_APP_API=http://localhost:8080 react-scripts start",
+    "start": "node server.js",
     "server": "cp tsconfig.copy.json tsconfig.json; nodemon server.ts",
-    "build": "REACT_APP_STATIC=https://bucket-meta.s3-sa-east-1.amazonaws.com/ REACT_APP_API=http://localhost:8080  react-scripts build",
+    "build": "REACT_APP_STATIC=https://bucket-meta.s3-sa-east-1.amazonaws.com/ REACT_APP_API=http://localhost:8080 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

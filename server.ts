@@ -54,7 +54,7 @@ AWS.config.update({
 /**
  * Modificar a pasta para build aqui.
 */
-import jsonSite from './build/json/site.json'
+import jsonSite from './public/json/site.json'
 import fs from 'fs'
 
 
@@ -62,7 +62,7 @@ interface ISite {
     [index: string]: any
 }
 
-var staticFolder = './build'
+var staticFolder = './public'
 
 /**
  * A persistência será realizada em um arquivo estatico pela simplicidade dos dados.
@@ -212,7 +212,10 @@ app.post('/sendmail', (req, res, next) => {
 })
 
 const isAuth = (req: any, res: any, next: any) => {
-    if (req.user) {
+    /**
+     * NÃO ESQUECE DE RETIRAR ISSO QUE COLOCQUEI PRA N TER Q FICAR AUTHENTICANDO.
+     */
+    if (req.user || true) {
         next()
     } else {
         res.status(401).json({ "Unauthorized": 401 })

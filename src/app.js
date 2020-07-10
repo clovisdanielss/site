@@ -13,6 +13,7 @@ import {
   Route,
   Switch,
   Redirect,
+  Link,
 } from "react-router-dom";
 import Login from "./components/login";
 import UpdateAccount from "./components/updateAccount";
@@ -50,6 +51,15 @@ const Site = (props) => {
       />
       <Contact readOnly={props.readOnly} contact={jsonSite.contact} />
       <Footer readOnly={props.readOnly} />
+      {props.readOnly ? null : (
+        <div className="icon-config">
+          <Link className="nav-link" to="/update">
+            <span className="icon">
+              <i className="fas fa-cogs my-icon"></i>
+            </span>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

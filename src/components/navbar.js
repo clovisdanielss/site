@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import ComponentWithModal from "../componentwithmodal";
-import ModalDefault from '../modals/modalDefault'
 import { post } from "../loaddata";
+import ModalNavbar from "../modals/modalNavbar";
 
 class Navbar extends ComponentWithModal {
   route = "/navbar";
@@ -14,9 +15,11 @@ class Navbar extends ComponentWithModal {
       selectorIndex: 0,
       items: props.navbar.items,
       src: props.navbar.src,
+      srcAlt: props.navbar.srcAlt,
     };
     this.onChangeValue = this.onChangeValue.bind(this);
     this.onChangeSrc = this.onChangeSrc.bind(this);
+    this.onChangeSrcAlt = this.onChangeSrcAlt.bind(this);
     this.defineAndOpenModal = this.defineAndOpenModal.bind(this);
   }
 
@@ -33,10 +36,33 @@ class Navbar extends ComponentWithModal {
     reader.onload = (e) => {
       if (e.target && e.target.result) {
         const buffer = Buffer.from(e.target.result).toJSON();
-        post("/upload", { data: buffer, name: file.name.replaceAll(" ","_") });
+        post("/upload", { data: buffer, name: file.name.replaceAll(" ", "_") });
       }
     };
-    this.setState({ src: process.env.REACT_APP_STATIC + "img/" + e.target.files[0].name.replaceAll(" ","_") });
+    this.setState({
+      src:
+        process.env.REACT_APP_STATIC +
+        "img/" +
+        e.target.files[0].name.replaceAll(" ", "_"),
+    });
+  }
+
+  onChangeSrcAlt(e) {
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = (e) => {
+      if (e.target && e.target.result) {
+        const buffer = Buffer.from(e.target.result).toJSON();
+        post("/upload", { data: buffer, name: file.name.replaceAll(" ", "_") });
+      }
+    };
+    this.setState({
+      srcAlt:
+        process.env.REACT_APP_STATIC +
+        "img/" +
+        e.target.files[0].name.replaceAll(" ", "_"),
+    });
   }
 
   /* No clique de uma entidade editavel, primeiro será definido
@@ -46,21 +72,24 @@ class Navbar extends ComponentWithModal {
     this.openModal();
   }
 
-  componentDidUpdate(){
-    console.log(this.state)
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   render() {
     return (
       <nav className="navbar navbar-expand-lg">
-        <ModalDefault
+        <ModalNavbar
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Navbar"
           description="Use '>' para separar os elementos."
           onChangeValue={this.onChangeValue}
           onChangeSrc={this.onChangeSrc}
-          text={this.state.selector === "items" ? this.state.items.join(">") : ""}
+          onChangeSrcAlt={this.onChangeSrcAlt}
+          text={
+            this.state.selector === "items" ? this.state.items.join(">") : ""
+          }
           isImage={this.state.selector === "src"}
         />
         <div className="container">
@@ -70,7 +99,12 @@ class Navbar extends ComponentWithModal {
             data-state="src"
             onClick={this.defineAndOpenModal}
           >
-            <img data-state="src" src={this.state.src} alt="logo" onClick={this.defineAndOpenModal}/>
+            <img
+              data-state="src"
+              src={this.state.src}
+              alt="logo"
+              onClick={this.defineAndOpenModal}
+            />
           </a>
           <button
             className="navbar-toggler"
@@ -86,12 +120,12 @@ class Navbar extends ComponentWithModal {
             </span>
           </button>
           <div
-            className={this.classNameHighlight("collapse navbar-collapse")}
+            className={"collapse navbar-collapse"}
             onClick={this.defineAndOpenModal}
             data-state="items"
             id="navbarSupportedContent"
           >
-            <ul className="navbar-nav ml-auto">
+            <ul className={this.classNameHighlight("navbar-nav ml-auto")}>
               {this.state.items.map((item, key) => (
                 <li className="nav-item" key={key}>
                   <a className="nav-link" href="#" data-scroll-nav={key}>

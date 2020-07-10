@@ -45,11 +45,11 @@ class ModalSkill extends Component {
           />
         </div>
         <div>
-          <button
-            className="my-modal-button"
+        <button
+            className="butn butn-bg ml-0 btn-block"
             onClick={this.props.onRequestClose}
           >
-            Save!
+            <span>Salvar</span>
           </button>
         </div>
         {/* <div>

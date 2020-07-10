@@ -45,26 +45,33 @@ class ComponentWithModal extends Component {
 
   closeModal(e) {
     /*
-        Aqui ocorrerá a persistência.
-      */
-    let toSubmit = {};
-    if (e.target) {
-      e = this.state;
-      for (let ele in e) {
-        if (
-          ele !== "modalIsOpen" &&
-          ele !== "selector" &&
-          ele !== "selectorIndex" &&
-          ele !== "id"
-        ) {
-          toSubmit[ele] = e[ele];
+      Aqui ocorrerá a persistência.
+      Timeout para ter a certeza que o estado
+      do objeto foi atualizado.
+      Espera invisivel ao usuário.
+    */
+    setTimeout(() => {
+      let toSubmit = {};
+      // Se 'e' for um evento.
+      if (e.target) {
+        for (let ele in this.state) {
+          if (
+            ele !== "modalIsOpen" &&
+            ele !== "selector" &&
+            ele !== "selectorIndex" &&
+            ele !== "id"
+          ) {
+            toSubmit[ele] = this.state[ele];
+          }
         }
       }
-    } else {
-      toSubmit = e;
-    }
-    console.log("A submeter ... ", toSubmit);
-    post(this.route, toSubmit);
+      //Senão ('e' é um estado)
+      else {
+        toSubmit = e;
+      }
+      console.log("A submeter ... ", toSubmit);
+      post(this.route, toSubmit);
+    }, 1000);
     this.setState({ modalIsOpen: false });
   }
 }
