@@ -26,26 +26,52 @@ class ModalSkill extends Component {
           <h1>{this.props.contentLabel}</h1>
         </div>
         <hr />
-        <div>
-          <label>Skill:</label>
-          <input
-            className="my-modal-textarea"
-            value={this.props.skill.name}
-            onChange={this.props.onChangeName}
-            data-id={this.props.skill.id}
-          />
+        <div className="container">
+          <div className="row">
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <label
+                  className="input-group-text"
+                  style={{
+                    width: "100px",
+                  }}
+                >
+                  Skill:
+                </label>
+              </div>
+
+              <input
+                className="form-control"
+                value={this.props.skill.name}
+                onChange={this.props.onChangeName}
+                data-id={this.props.skill.id}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <label
+                  className="input-group-text"
+                  style={{
+                    width: "100px",
+                  }}
+                >
+                  Value:
+                </label>
+              </div>
+
+              <input
+                className="form-control"
+                value={this.props.skill.value}
+                onChange={this.props.onChangeValue}
+                data-id={this.props.skill.id}
+              />
+            </div>
+          </div>
         </div>
         <div>
-          <label>Value:</label>
-          <input
-            className="my-modal-textarea"
-            value={this.props.skill.value}
-            onChange={this.props.onChangeValue}
-            data-id={this.props.skill.id}
-          />
-        </div>
-        <div>
-        <button
+          <button
             className="butn butn-bg ml-0 btn-block"
             onClick={this.props.onRequestClose}
           >
@@ -73,4 +99,4 @@ class ModalSkill extends Component {
   }
 }
 
-export default ModalSkill
+export default ModalSkill;

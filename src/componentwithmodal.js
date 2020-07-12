@@ -50,26 +50,25 @@ class ComponentWithModal extends Component {
       do objeto foi atualizado.
       Espera invisivel ao usuário.
     */
-    setTimeout(() => {
-      let toSubmit = {};
-      // Se 'e' for um evento.
-      if (e.target) {
-        for (let ele in this.state) {
-          if (
-            ele !== "modalIsOpen" &&
-            ele !== "selector" &&
-            ele !== "selectorIndex" &&
-            ele !== "id"
-          ) {
-            toSubmit[ele] = this.state[ele];
-          }
+    let toSubmit = {};
+    // Se 'e' for um evento.
+    if (e.target) {
+      for (let ele in this.state) {
+        if (
+          ele !== "modalIsOpen" &&
+          ele !== "selector" &&
+          ele !== "selectorIndex" &&
+          ele !== "id"
+        ) {
+          toSubmit[ele] = this.state[ele];
         }
       }
-      //Senão ('e' é um estado)
-      else {
-        toSubmit = e;
-      }
-      console.log("A submeter ... ", toSubmit);
+    }
+    //Senão ('e' é um estado)
+    else {
+      toSubmit = e;
+    }
+    setTimeout(() => {
       post(this.route, toSubmit);
     }, 1000);
     this.setState({ modalIsOpen: false });

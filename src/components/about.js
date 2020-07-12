@@ -34,6 +34,8 @@ class Skills extends ComponentWithModal {
     this.onRemove = this.onRemove.bind(this);
   }
 
+  
+
   onRemove(e) {
     let index = parseInt(e.target.getAttribute("data-index"));
     this.props.onRemove(index);
@@ -43,7 +45,6 @@ class Skills extends ComponentWithModal {
   }
 
   closeModal() {
-    console.log("skills: ", this.props.skills);
     /** Ajustar remover... */
     ComponentWithModal.prototype.closeModal.apply(this, [this.props.skills]);
   }

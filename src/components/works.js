@@ -215,7 +215,6 @@ class Works extends ComponentWithModal {
   componentDidUpdate() {
     if (!this.props.readOnly) {
       window.$gallery.isotope("destroy").isotope();
-      
     }
   }
 

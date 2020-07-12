@@ -125,10 +125,25 @@ class Navbar extends ComponentWithModal {
             data-state="items"
             id="navbarSupportedContent"
           >
-            <ul className={this.classNameHighlight("navbar-nav ml-auto")}>
+            <ul
+              className={this.classNameHighlight("navbar-nav ml-auto")}
+              onClick={this.defineAndOpenModal}
+              data-state="items"
+            >
               {this.state.items.map((item, key) => (
-                <li className="nav-item" key={key}>
-                  <a className="nav-link" href="#" data-scroll-nav={key}>
+                <li
+                  className="nav-item"
+                  key={key}
+                  onClick={this.defineAndOpenModal}
+                  data-state="items"
+                >
+                  <a
+                    className="nav-link"
+                    href="#"
+                    data-scroll-nav={key}
+                    onClick={this.defineAndOpenModal}
+                    data-state="items"
+                  >
                     {item}
                   </a>
                 </li>

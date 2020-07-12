@@ -31,13 +31,35 @@ class ModalNavbar extends Component {
             </div>
           </div>
         ) : (
-          <div>
-            <label>Text:</label>
-            <textarea
-              className="my-modal-textarea"
-              value={this.props.text}
-              onChange={this.props.onChangeValue}
-            />
+          <div className="container">
+            <div className="row">
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <label
+                    className="input-group-text"
+                    style={{
+                      width: "100px",
+                    }}
+                  >
+                    Text:
+                  </label>
+                </div>
+                <div
+                  style={{
+                    flex: "1 1 auto",
+                  }}
+                >
+                  <textarea
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                    value={this.props.text}
+                    onChange={this.props.onChangeValue}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         )}
         <div>

@@ -103,7 +103,6 @@ class HeaderEnterprise extends ComponentWithModal {
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           contentLabel="Edit Header"
-          description="Use '>' para separar os elementos. Use # para separar telas."
           setParentState={this.setMyState}
           onChangeSrc={this.onChangeSrc}
           text={this.doubleArrayToText()}
