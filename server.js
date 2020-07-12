@@ -180,7 +180,7 @@ app.post('/login', passport_1.default.authenticate('local'), function (req, res,
 */
 app.post('/forgotPassword', function (req, res, next) {
     if (!req.body.username) {
-        res.json({ "Bad Request": 300 });
+        res.status(300).json({ "Bad Request": 300 });
     }
     var hash = crypto_1.default.createHash("sha512");
     var newPass = crypto_1.default.randomBytes(4).toString("hex");
@@ -247,15 +247,22 @@ var isAuth = function (req, res, next) {
 app.patch('/user', isAuth, function (req, res, next) {
     ///@ts-ignore
     var user = req.user;
+    if (req.body.username.trim().length === 0 || req.body.password.trim().length === 0) {
+        res.status(301).json({ "Bad Request": 301 });
+        return;
+    }
+    var hash = crypto_1.default.createHash("sha512");
+    hash.update(req.body.password + req.body.username);
     User.findOneAndUpdate({ _id: user._id }, {
-        username: req.body.username ? req.body.username : user.username,
-        password: req.body.password ? req.body.password : user.password,
-        email: req.body.email ? req.body.email : user.email
+        username: req.body.username,
+        password: hash.digest('hex'),
+        email: req.body.email.trim().length != 0 ? req.body.email : user.email
     })
         .then(function () { return res.json({ success: true }); })
         .catch(function (error) { return res.json(error); });
 });
 app.get('/edit', isAuth);
+app.get('/update', isAuth);
 /**
  * Rota genérica para servidor estático.
  */

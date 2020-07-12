@@ -14,6 +14,7 @@ class Login extends Component {
       success: false,
     };
     this.onSubimit = this.onSubimit.bind(this);
+    this.forgotPassword = this.forgotPassword.bind(this);
   }
 
   onSubimit(e) {
@@ -36,9 +37,27 @@ class Login extends Component {
     );
   }
 
+  forgotPassword(e) {
+    let username = document.getElementById("username").value.trim();
+    this.setState({ sent: true });
+    const thisComp = this;
+    post(
+      "/forgotPassword",
+      { username },
+      () => {
+        alert("Enviado para email cadastrado");
+        this.setState({ sent: false });
+      },
+      () => {
+        alert("Preencha pelo menos o nome de usuário.");
+        this.setState({ sent: false });
+      }
+    );
+  }
+
   render() {
     if (this.state.success) {
-      return <Redirect  to="/edit"></Redirect>;
+      return <Redirect to="/edit"></Redirect>;
     }
     return (
       <section className="section-padding ">
@@ -86,7 +105,7 @@ class Login extends Component {
                   />
                 </div>
                 <div>
-                  <a href="#" className="fg-light">
+                  <a href="#" className="fg-light" onClick={this.forgotPassword}>
                     {" "}
                     Esqueceu a senha ?{" "}
                   </a>

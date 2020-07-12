@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ModalWork  from "../modals/modalWork";
-import ModalDefault from '../modals/modalDefault'
+import ModalWork from "../modals/modalWork";
+import ModalDefault from "../modals/modalDefault";
 import ComponentWithModal from "../componentwithmodal";
 import SubHeader from "./subheader";
 import { post } from "../loaddata";
@@ -50,7 +50,6 @@ class Work extends ComponentWithModal {
   }
   closeModal() {
     ComponentWithModal.prototype.closeModal.apply(this, [this.props.works]);
-    window.location.reload();
   }
 
   defineAndOpenModal(e) {
@@ -213,8 +212,11 @@ class Works extends ComponentWithModal {
    * Refaz o isotopo da galaria a cada atualização de componente.
    */
   componentDidUpdate() {
+    console.log("Updated")
     if (!this.props.readOnly) {
-      window.$gallery.isotope("destroy").isotope();
+      setTimeout(() => {
+        window.$gallery.isotope("destroy").isotope();
+      }, 30);
     }
   }
 
@@ -223,6 +225,7 @@ class Works extends ComponentWithModal {
   }
 
   render() {
+    console.log("Will render")
     return (
       <section className="works section-padding bg-gray" data-scroll-index="3">
         <ModalDefault

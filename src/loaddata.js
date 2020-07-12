@@ -28,4 +28,24 @@ function post(route, data, cbSuccess,cbError) {
     });
 }
 
-export { getSite, post };
+function patch(route, data, cbSuccess,cbError) {
+  let url = process.env.REACT_APP_API
+    ? process.env.REACT_APP_API + route
+    : route;
+  axios
+    .patch(url, data)
+    .then((response) => {
+      console.log("Sucesso!", route);
+      if(cbSuccess){
+        cbSuccess()
+      }
+    })
+    .catch((err) => {
+      console.error("Erro!", route, url);
+      if(cbError){
+        cbError()
+      }
+    });
+}
+
+export { getSite, post, patch };

@@ -36,7 +36,6 @@ class Header extends ComponentWithModal {
 
   closeModal() {
     ComponentWithModal.prototype.closeModal.apply(this, [this.state]);
-    window.location.reload();
   }
 
   onChangeSrc(e) {

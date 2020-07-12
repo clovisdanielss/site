@@ -158,7 +158,7 @@ class ModalHeaderEnterprise extends Component {
                   onChange={this.props.onChangeSrc}
                 />
                 <label className="custom-file-label" htmlFor="inputGroupFile01">
-                  Choose file
+                  Escolha o arquivo
                 </label>
               </div>
             </div>

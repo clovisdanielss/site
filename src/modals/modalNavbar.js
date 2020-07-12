@@ -18,16 +18,48 @@ class ModalNavbar extends Component {
           <label>{this.props.description}</label>
         ) : null}
         {this.props.isImage ? (
-          <div>
-            <div>
-              <label>Arquivo Imagem Clara:</label>
-              <br />
-              <input type="file" onChange={this.props.onChangeSrc}></input>
+          <div className="container">
+            <div className="row">
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Logo Imagem Clara:</span>
+                </div>
+                <div className="custom-file">
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    id="inputGroupFile01"
+                    onChange={this.props.onChangeSrc}
+                  />
+                  <label
+                    className="custom-file-label"
+                    htmlFor="inputGroupFile01"
+                  >
+                    Escolha o arquivo
+                  </label>
+                </div>
+              </div>
             </div>
-            <div>
-              <label>Arquivo Imagem Escura:</label>
-              <br />
-              <input type="file" onChange={this.props.onChangeSrcAlt}></input>
+            <div className="row">
+              <div className="input-group mb-3">
+                <div className="input-group-prepend">
+                  <span className="input-group-text">Logo Imagem Escura:</span>
+                </div>
+                <div className="custom-file">
+                  <input
+                    type="file"
+                    className="custom-file-input"
+                    id="inputGroupFile02"
+                    onChange={this.props.onChangeSrcAlt}
+                  />
+                  <label
+                    className="custom-file-label"
+                    htmlFor="inputGroupFile02"
+                  >
+                    Escolha o arquivo
+                  </label>
+                </div>
+              </div>
             </div>
           </div>
         ) : (

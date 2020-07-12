@@ -69,8 +69,8 @@ class ComponentWithModal extends Component {
       toSubmit = e;
     }
     setTimeout(() => {
-      post(this.route, toSubmit);
-    }, 1000);
+      post(this.route, toSubmit,()=>{window.location.reload()});
+    }, 500);
     this.setState({ modalIsOpen: false });
   }
 }

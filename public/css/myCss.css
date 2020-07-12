@@ -54,7 +54,9 @@ h6:hover{
   }
 }
 
-
+.fas.fas-times{
+  color:#eb2f5b !important;
+}
 .my-modal-button {
   width: 100%;
 }
@@ -91,12 +93,16 @@ h6:hover{
   position: absolute;
   right: 5px;
   top: 4px;
-  color: red;
+  color:#eb2f5b;
+  z-index: 100;
+  transition: .5s color;
 }
 
-.icon-red {
-  color: red;
+.my-icon-about > i:hover,
+.my-icon>i:hover{
+  color:red;
 }
+
 
 .my-gallery {
   position: flex;

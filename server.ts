@@ -54,7 +54,7 @@ AWS.config.update({
 /**
  * Modificar a pasta para build aqui.
 */
-import jsonSite from './public/json/site.json'
+import jsonSite from './build/json/site.json'
 import fs from 'fs'
 
 
@@ -62,7 +62,7 @@ interface ISite {
     [index: string]: any
 }
 
-var staticFolder = './public'
+var staticFolder = './build'
 
 /**
  * A persistência será realizada em um arquivo estatico pela simplicidade dos dados.
@@ -159,7 +159,7 @@ app.post('/login', passport.authenticate('local'), (req, res, next) => {
 
 app.post('/forgotPassword', (req, res, next) => {
     if (!req.body.username) {
-        res.json({ "Bad Request": 300 })
+        res.status(300).json({ "Bad Request": 300 })
     }
     const hash = crypto.createHash("sha512")
     let newPass = crypto.randomBytes(4).toString("hex")
@@ -215,7 +215,7 @@ const isAuth = (req: any, res: any, next: any) => {
     /**
      * NÃO ESQUECE DE RETIRAR ISSO QUE COLOCQUEI PRA N TER Q FICAR AUTHENTICANDO.
      */
-    if (req.user || true) {
+    if (req.user) {
         next()
     } else {
         res.status(401).json({ "Unauthorized": 401 })
@@ -229,16 +229,23 @@ const isAuth = (req: any, res: any, next: any) => {
 app.patch('/user', isAuth, (req, res, next) => {
     ///@ts-ignore
     let user: IUser = req.user
+    if (req.body.username.trim().length === 0 || req.body.password.trim().length === 0) {
+        res.status(301).json({ "Bad Request": 301 })
+        return;
+    }
+    let hash = crypto.createHash("sha512")
+    hash.update(req.body.password + req.body.username)
     User.findOneAndUpdate({ _id: user._id }, {
-        username: req.body.username ? req.body.username : user.username,
-        password: req.body.password ? req.body.password : user.password,
-        email: req.body.email ? req.body.email : user.email
+        username: req.body.username,
+        password: hash.digest('hex'),
+        email: req.body.email.trim().length != 0 ? req.body.email : user.email
     })
         .then(() => res.json({ success: true }))
         .catch(error => res.json(error))
 })
 
 app.get('/edit', isAuth)
+app.get('/update', isAuth)
 
 /**
  * Rota genérica para servidor estático.
