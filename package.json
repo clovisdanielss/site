@@ -17,7 +17,7 @@
     "@types/passport-local": "^1.0.33",
     "@types/react": "^16.9.35",
     "aws-sdk": "^2.709.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
